@@ -16,7 +16,6 @@
     "moment-timezone": "^0.5.28",
     "mysql": "^2.18.1",
     "random": "^2.2.0",
-    "sharp": "^0.25.2",
     "snekfetch": "^4.0.4",
     "xmlhttprequest": "^1.8.0"
   }
