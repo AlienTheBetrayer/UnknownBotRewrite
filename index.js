@@ -74,10 +74,10 @@ client.on("ready", () => { // Client boot event
 });
 
 var connection = mySQL.createConnection({
-    host: `${process.env.SQL_HOST}`,
-    user: `${process.env.SQL_USER}`,
-    password: `${process.env.SQL_DBPASSWORD}`,
-    database: `${process.env.SQL_DBNAME}`
+    host: process.env.SQL_HOST,
+    user: process.env.SQL_USER,
+    password: process.env.SQL_DBPASSWORD,
+    database: process.env.SQL_DBNAME
 });
 
 connection.connect(err => {
