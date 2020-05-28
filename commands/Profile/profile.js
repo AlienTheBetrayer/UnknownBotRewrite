@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const mySQL = require("mysql");
-const sharp = require("sharp");
 
 const config = require("../../config.json");
 
