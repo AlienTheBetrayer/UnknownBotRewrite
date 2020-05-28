@@ -1,0 +1,23 @@
+const Discord = require("discord.js");
+
+const config = require("../.././config.json");
+
+module.exports.run = async(client, message, args) => {
+    const msg = args.slice(0).join(" ");
+
+    message.delete();
+
+    const embed = new Discord.MessageEmbed();
+    
+    embed.setColor(config.defaultColor);
+    embed.setTimestamp();
+    embed.setFooter(`${config.prefix}do`, client.user.displayAvatarURL());
+    embed.setDescription(`\`\`\`${msg}\`\`\``);
+
+    message.channel.send(embed);
+}
+
+module.exports.config = {
+    name: "do",
+    aliases: [""]
+}
