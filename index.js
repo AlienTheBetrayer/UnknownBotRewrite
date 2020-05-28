@@ -73,6 +73,11 @@ client.on("ready", () => { // Client boot event
     console.log("\n[BOOT] Bot has started. \n\n");
 });
 
+console.log(process.env.SQL_HOST);
+console.log(process.env.SQL_USER);
+console.log(process.env.SQL_DBPASSWORD);
+console.log(process.env.SQL_DBNAME);
+
 var connection = mySQL.createConnection({
     host: process.env.SQL_HOST,
     user: process.env.SQL_USER,
