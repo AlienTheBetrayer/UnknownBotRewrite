@@ -51,7 +51,7 @@ module.exports.run = async(client, message, args, connection) => {
             embed.setTimestamp();
             embed.setFooter(`${config.prefix}punch`, client.user.displayAvatarURL());
             embed.setTitle("Punch");
-            embed.setDescription(`<@${message.author.id}> has punched <@${member.user.id}> ✊`);
+            embed.setDescription(`<@${message.author.id}> has punched <@${member.user.id}> 👊`);
 
             message.channel.send(embed);
         } else {

@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const mySQL = require("mysql");
+const sharp = require("sharp");
 
 const config = require("../../config.json");
 
@@ -118,8 +119,6 @@ module.exports.run = async(client, message, args, connection) => {
     embed.setFooter(`$profile | This is profile! Type $profilechange <data> <value> to change it! `, client.user.displayAvatarURL());
 
     message.channel.send(embed);
-
-    
 }
 
 module.exports.config = {

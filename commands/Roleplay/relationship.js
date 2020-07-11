@@ -32,14 +32,12 @@ module.exports.run = async(client, message, args, connection) => {
 
     if(!member && !args.slice(0).join(" ") && !found) {
         message.react(config.wrongEmoji);
-        console.log("smth");
         return;
     }
 
     if(member.user == message.author) {
         message.react(config.wrongEmoji);
         return;
-        console.log("equals;");
     }
 
     let firstTaken, secondTaken;
@@ -61,7 +59,6 @@ module.exports.run = async(client, message, args, connection) => {
      if(firstTaken || secondTaken) {
         message.react(config.wrongEmoji);
         return;
-        console.log("taken");
      }
     
     const embed = new Discord.MessageEmbed();
@@ -79,7 +76,7 @@ module.exports.run = async(client, message, args, connection) => {
     message.channel.send(embed);
 
     const filter = m => {
-        return (m.content.toLowerCase().includes("relationship accept") || m.content.toLowerCase().includes("rs accept") && m.author.id == member.user.id);
+        return ((m.content.toLowerCase().includes("relationship accept") || m.content.toLowerCase().includes("rs accept")) && m.author.id == member.user.id);
     }
 
     message.channel.awaitMessages(filter, {max : 1, time : 120000, errors: ['time']})

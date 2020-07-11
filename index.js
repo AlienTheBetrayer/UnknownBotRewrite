@@ -1,25 +1,37 @@
-// Setup
+// Library setup
 const Discord = require("discord.js");
-const config = require("./config.json");
 const fs = require("fs");
-const moment = require("moment");
+const moment = require("moment");   
 const random = require("random");
 const mySQL = require("mysql");
+
+// File setup
+const config = require("./config.json");
+const pconfig = require("./private_config.json");
 
 const client = new Discord.Client();
 
 // Config
 const prefix = config.prefix;
-const token = process.env.BOT_TOKEN;
+const token = pconfig.token;
+
+const sql_host = pconfig.host;
+const sql_user = pconfig.user;
+const sql_password = pconfig.password;
+const sql_database = pconfig.database;
 
 // Loading commands
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
-client.mutes = require("./commands/mutes.json");
+
+client.mutes = require("./commands/mutes.json"); // TODO: MUTES
 
 console.log("\n[INFO] Command loading has been started.");
 
 let loaded = false;
+
+let cmds = 0;
+const events = 10;
 
 fs.readdir("./commands/", (err, files) => { 
     files.forEach(fileName => { 
@@ -40,6 +52,7 @@ fs.readdir("./commands/", (err, files) => {
                 if(fileType == "js") {
                     console.log("[COMMAND LOADING] " + commandName + " has been loaded.");
                     loaded = true;
+                    ++cmds;
                 }
 
                 pull.config.aliases.forEach(alias => {
@@ -62,28 +75,17 @@ function createServer(guildId, object) {
 // Client events
 client.on("ready", () => { // Client boot event
     client.user.setActivity("Indev | " + prefix + "help", {type: "STREAMING", url: "https://www.twitch.tv/alienbetrayer"});
-    const numberOfCommands = ["5", "6", "1", "3", "8", "10", "4", "1", "11"];
-    let sum = 0;
-
-    for(i = 0; i < numberOfCommands.length; ++i) {
-        sum += parseInt(numberOfCommands[i], 10);
-    }
     
-    console.log(`\n ${sum} commands have been successfully loaded.`);
+    console.log(`\n ${cmds} commands and ${events} events have been successfully loaded.`);
+
     console.log("\n[BOOT] Bot has started. \n\n");
 });
 
-console.log(process.env.SQL_HOST);
-console.log(process.env.SQL_USER);
-console.log(process.env.SQL_DBPASSWORD);
-console.log(process.env.SQL_DBNAME);
-
 var connection = mySQL.createConnection({
-    host: process.env.SQL_HOST,
-    user: process.env.SQL_USER,
-    password: process.env.SQL_DBPASSWORD,
-    database: process.env.SQL_DBNAME,
-    port : "8889"
+    host: sql_host,
+    user: sql_user,
+    password: sql_password,
+    database: sql_database
 });
 
 connection.connect(err => {
@@ -200,19 +202,13 @@ client.on("guildDelete", guild => {
     client.guildSettings.delete(guild.id);
 });
 
-
-
 function FindChannel(channelName, messageObject) {
     return messageObject.guild.channels.cache.find(ch => ch.name === channelName); 
 }
 
-
-
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-
 
 function ensureLogsChannel(messageObject) {
     const found = FindChannel("logs", messageObject);
@@ -231,8 +227,6 @@ function ensureLogsChannel(messageObject) {
     } 
 }
 
-
-
 function findExtension(url) {
     let dotIndex = 0;
 
@@ -245,11 +239,9 @@ function findExtension(url) {
     return dotIndex;
 }
 
-
-
 function log(embedObject, logType, guildId) {
     const guilds = client.guilds;
-    const logGuild = guilds.cache.find(g => g.id == 710437570626060339);
+    const logGuild = guilds.cache.find(g => g.id == "710437570626060339");
 
     if(logGuild) {
         const channel = logGuild.channels.cache.find(ch => ch.name.includes(logType));
@@ -258,8 +250,6 @@ function log(embedObject, logType, guildId) {
         channel.send(embedObject);
     }
 }
-
-
 
 client.on("messageDelete", async message => {
     if(message.author.bot || message.content.startsWith("$me") || message.content.startsWith("$try") || message.content.startsWith("$do")) return;
@@ -319,6 +309,7 @@ client.on("messageDelete", async message => {
 
 
 
+
 client.on("messageUpdate", async (oldMessage, newMessage) => {
     if(oldMessage == newMessage || newMessage.author.bot) return;
 
@@ -368,7 +359,7 @@ client.on("messageUpdate", async (oldMessage, newMessage) => {
     embed.setTimestamp();
     embed.setFooter(`Message edit event. `, client.user.displayAvatarURL());
     embed.setTitle("Message has been edited.");
-    embed.addField("Message link", `**[Jump](${newMessage.url})**`);
+    embed.addField("Message link", `Message jump **[#${newMessage.channel.name}](${newMessage.url})**`);
     embed.addField("Created at", "```" + createdDate + "```");
     embed.addField("Edited at", "```" + editedDate + "```");
     embed.addField("Old message content", "```" + oldMessage.content +"```");
@@ -377,6 +368,7 @@ client.on("messageUpdate", async (oldMessage, newMessage) => {
     channel.send(embed);
     log(embed, "message", newMessage.guild.id);
 });
+
 
 
 
@@ -597,6 +589,7 @@ client.on("channelDelete", async channel_ => {
     channel.send(embed);
     log(embed, "channel", channel.guild.id);
 });
+
 
 
 

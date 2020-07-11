@@ -36,7 +36,6 @@ module.exports.run = async(client, message, args, connection) => {
 
     connection.query(sql);
     message.react(config.correctEmoji);
-
  }
 
 module.exports.config = {
