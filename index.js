@@ -74,7 +74,7 @@ function createServer(guildId, object) {
 
 // Client events
 client.on("ready", () => { // Client boot event
-    client.user.setActivity("Indev | " + prefix + "help", {type: "STREAMING", url: "https://www.twitch.tv/alienbetrayer"});
+    client.user.setActivity("Stable | " + prefix + "help", {type: "STREAMING", url: "https://www.twitch.tv/alienbetrayer"});
     
     console.log(`\n ${cmds} commands and ${events} events have been successfully loaded.`);
 
