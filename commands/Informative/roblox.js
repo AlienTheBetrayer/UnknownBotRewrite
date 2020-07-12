@@ -43,6 +43,7 @@ module.exports.run = async(client, message, args) => {
 
            const embed = new Discord.MessageEmbed();
     
+           embed.setDescription(`${member.displayName}`);
            embed.setColor(config.defaultColor);
            embed.setAuthor(message.author.username + "#" + message.author.discriminator, message.author.displayAvatarURL());
            embed.setTimestamp();

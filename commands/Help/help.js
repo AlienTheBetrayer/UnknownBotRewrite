@@ -77,24 +77,24 @@ module.exports.run = async(client, message, args) => {
 `\`\`\`¥levels {leaderboard} - Gives leaderboard of all levels in current guild. \`\`\``]; 
 
     for(A = 0; A < 5; ++A) {
-    for (i = 0; i < modulesInfo.length; ++i) {
-        if(modulesInfo[i].indexOf('¥') != -1) {
-            modulesInfo[i] = modulesInfo[i].replace('¥', config.prefix);
+        for (i = 0; i < modulesInfo.length; ++i) {
+            if(modulesInfo[i].indexOf('¥') != -1) {
+                modulesInfo[i] = modulesInfo[i].replace('¥', config.prefix);
+            }
         }
-    }
 
-    for(j = 0; j < commands.length; ++j) {
-        if(commands[j].indexOf('¥') != -1) {
-            commands[j] = commands[j].replace('¥', config.prefix);
+        for(j = 0; j < commands.length; ++j) {
+            if(commands[j].indexOf('¥') != -1) {
+                commands[j] = commands[j].replace('¥', config.prefix);
+            }
         }
-    }
 
-    for(j = 0; j < commandsInfo.length; ++j) {
-        if(commandsInfo[j].indexOf('¥') != -1) {
-            commandsInfo[j] = commandsInfo[j].replace('¥', config.prefix);
+        for(j = 0; j < commandsInfo.length; ++j) {
+            if(commandsInfo[j].indexOf('¥') != -1) {
+                commandsInfo[j] = commandsInfo[j].replace('¥', config.prefix);
+            }
         }
     }
-}
 
     if (!args[0]) { // All module names
         const embed = new Discord.MessageEmbed();
