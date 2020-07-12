@@ -39,7 +39,7 @@ module.exports.run = async(client, message, args, connection) => {
         member = message.member;
     }
 
-    await sqlQuery(connection, `SELECT * FROM roleplayData WHERE userId = '${member.user.id}' AND guildId = '${message.guild.id}'`)
+    await sqlQuery(connection, `SELECT * FROM roleplaydata WHERE userId = '${member.user.id}' AND guildId = '${message.guild.id}'`)
     .then(rows => {
         if(rows.length < 1) {
             message.react(config.wrongEmoji);

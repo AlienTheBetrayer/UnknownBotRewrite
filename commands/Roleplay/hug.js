@@ -40,11 +40,11 @@ module.exports.run = async(client, message, args, connection) => {
         return;
     }
 
-    await sqlQuery(connection, `SELECT * FROM roleplayData WHERE guildId = '${message.guild.id}' AND userId = '${member.user.id}'`)
+    await sqlQuery(connection, `SELECT * FROM roleplaydata WHERE guildId = '${message.guild.id}' AND userId = '${member.user.id}'`)
     .then(rows => {
         if(rows.length >= 1) {
-            connection.query(`UPDATE roleplayData SET hugs = ${rows[0].hugs + 1} WHERE userId = '${member.user.id}' AND guildId = '${message.guild.id}'`);
-            connection.query(`UPDATE roleplayData SET hugs = ${rows[0].hugs + 1} WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`);
+            connection.query(`UPDATE roleplaydata SET hugs = ${rows[0].hugs + 1} WHERE userId = '${member.user.id}' AND guildId = '${message.guild.id}'`);
+            connection.query(`UPDATE roleplaydata SET hugs = ${rows[0].hugs + 1} WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`);
 
             const embed = new Discord.MessageEmbed();
     
