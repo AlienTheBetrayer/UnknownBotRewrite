@@ -27,14 +27,14 @@ module.exports.run = async(client, message, args, connection) => {
         return;
     }
 
-    connection.query(`SELECT * FROM userProfile WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`, (err, rows) => {
+    connection.query(`SELECT * FROM userprofile WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`, (err, rows) => {
         if(err) {
             console.log(err);
             message.react(config.wrongEmoji);
             return;
         }
 
-            connection.query(`SELECT * FROM userProfile WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}' AND data = '${key}'`, (err_, rows_) => {
+            connection.query(`SELECT * FROM userprofile WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}' AND data = '${key}'`, (err_, rows_) => {
                 if(err_) {
                     console.log(err_);
                     message.react(config.wrongEmoji);
@@ -44,9 +44,9 @@ module.exports.run = async(client, message, args, connection) => {
                 let sql_;
 
                 if(rows_.length < 1) {
-                    sql_ = `INSERT INTO userProfile(guildId, userId, data, value) VALUES('${message.guild.id}', '${message.author.id}', '${key}', '${value}')`;
+                    sql_ = `INSERT INTO userprofile(guildId, userId, data, value) VALUES('${message.guild.id}', '${message.author.id}', '${key}', '${value}')`;
                 } else {
-                    sql_ = `UPDATE userProfile SET value = '${value}' WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}' AND data = '${key}'`;
+                    sql_ = `UPDATE userprofile SET value = '${value}' WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}' AND data = '${key}'`;
                 }
 
                 connection.query(sql_);

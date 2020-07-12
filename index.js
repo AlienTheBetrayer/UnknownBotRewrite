@@ -9,8 +9,6 @@ const mySQL = require("mysql");
 const config = require("./config.json");
 const pconfig = require("./private_config.json");
 
-const client = new Discord.Client();
-
 // Config
 const prefix = config.prefix;
 const token = pconfig.token;
@@ -20,6 +18,11 @@ const sql_user = pconfig.user;
 const sql_password = pconfig.password;
 const sql_database = pconfig.database;
 
+const caller = pconfig.caller;
+
+// Discord client
+const client = new Discord.Client();
+
 // Loading commands
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
@@ -28,11 +31,12 @@ client.mutes = require("./commands/mutes.json"); // TODO: MUTES
 
 console.log("\n[INFO] Command loading has been started.");
 
+// Variables for outputting in the console
 let loaded = false;
-
 let cmds = 0;
 const events = 10;
 
+// Getting all the commands
 fs.readdir("./commands/", (err, files) => { 
     files.forEach(fileName => { 
         fs.readdir("./commands/" + fileName, (err_, file) => { 
@@ -74,7 +78,13 @@ function createServer(guildId, object) {
 
 // Client events
 client.on("ready", () => { // Client boot event
-    client.user.setActivity("Stable | " + prefix + "help", {type: "STREAMING", url: "https://www.twitch.tv/alienbetrayer"});
+    let status = "Indev";
+
+    if(caller == "pi") {
+        status = "Stable";
+    }
+
+    client.user.setActivity(`${status} | ` + prefix + "help", {type: "STREAMING", url: "https://www.twitch.tv/alienbetrayer"});
     
     console.log(`\n ${cmds} commands and ${events} events have been successfully loaded.`);
 
@@ -159,12 +169,12 @@ client.on("message", async message => {  // Client message event
         }
     });
 
-    await sqlQuery(connection, `SELECT * FROM roleplayData WHERE guildId = '${message.guild.id}' AND userId = '${message.author.id}'`)
+    await sqlQuery(connection, `SELECT * FROM roleplaydata WHERE guildId = '${message.guild.id}' AND userId = '${message.author.id}'`)
     .then(rows => {
         if(rows.length < 1) {
             let sql;
 
-            sql = `INSERT INTO roleplayData(guildId, userId, hugs, kisses, punches) VALUES('${message.guild.id}', '${message.author.id}', 0, 0, 0)`;
+            sql = `INSERT INTO roleplaydata(guildId, userId, hugs, kisses, punches) VALUES('${message.guild.id}', '${message.author.id}', 0, 0, 0)`;
 
             connection.query(sql);
         }

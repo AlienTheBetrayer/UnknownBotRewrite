@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const mySQL = require("mysql");
-const sharp = require("sharp");
 
 const config = require("../../config.json");
 
@@ -60,7 +59,7 @@ module.exports.run = async(client, message, args, connection) => {
     const defaultKeys = [`${user.username}`, "Age", "Status", "Mood", "Alone", `${config.defaultColor}`, `${user.displayAvatarURL({format : "png", dynamic : true, size : 1024})}`, "Birthday"];
     let userData = []
 
-    await sqlQuery(connection, `SELECT * FROM userProfile WHERE userId = '${user.id}' AND guildId = '${message.guild.id}'`).then(rows => {
+    await sqlQuery(connection, `SELECT * FROM userprofile WHERE userId = '${user.id}' AND guildId = '${message.guild.id}'`).then(rows => {
         let found = false;
 
         for(j = 0; j < availableKeys.length; ++j) {

@@ -45,7 +45,6 @@ module.exports.run = async(client, message, args, connection) => {
         const neededXp = levelupXp - currentXp;
         const havePercentage = 100 - Math.floor((neededXp / levelupXp) * 100);
     
-
         const embed = new Discord.MessageEmbed();
     
         embed.setColor(config.defaultColor);
@@ -62,11 +61,7 @@ module.exports.run = async(client, message, args, connection) => {
         for(i = 1; i <= 10; ++i) {
             const bar = Math.round(havePercentage / 10);
 
-            if(i <= bar) {
-                progressBar = progressBar.concat("⬜")
-            } else {
-                progressBar =progressBar.concat("⬛");
-            }
+            progressBar = (i <= bar) ? progressBar.concat("⬜") : progressBar.concat("⬛");
         }
 
         embed.addField("Progress bar", "```" + progressBar + "```");
