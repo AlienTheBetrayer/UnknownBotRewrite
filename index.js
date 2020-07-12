@@ -1,3 +1,5 @@
+// Unknown Bot Rewrite
+
 // Library setup
 const Discord = require("discord.js");
 const fs = require("fs");
