@@ -45,6 +45,10 @@ module.exports.run = async(client, message, args, connection) => {
         if(rows.length >= 1) {
             connection.query(`UPDATE roleplaydata SET hugs = ${rows[0].hugs + 1} WHERE userId = '${member.user.id}' AND guildId = '${message.guild.id}'`);
             connection.query(`UPDATE roleplaydata SET hugs = ${rows[0].hugs + 1} WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`);
+        } else {
+            connection.query(`INSERT INTO roleplaydata(guildId, userId, hugs, kisses, punches) VALUES('${message.guild.id}', '${member.user.id}', 1, 0, 0);`);
+            connection.query(`INSERT INTO roleplaydata(guildId, userId, hugs, kisses, punches) VALUES('${message.guild.id}', '${message.author.id}', 1, 0, 0);`);
+        }
 
             const embed = new Discord.MessageEmbed();
     
@@ -56,10 +60,6 @@ module.exports.run = async(client, message, args, connection) => {
             embed.setDescription(`<@${message.author.id}> has hugged <@${member.user.id}> 🤗`);
 
             message.channel.send(embed);
-        } else {
-            message.react(config.wrongEmoji);
-            return;
-        }
     });
 }
 

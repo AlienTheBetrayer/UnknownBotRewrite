@@ -29,7 +29,7 @@ module.exports.run = async(client, message, args, connection) => {
         });
     }
 
-    if(!member && !args.slice(0).join(" ") || !found) {
+    if(!member && !found) {
         message.react(config.wrongEmoji);
         return;
     }
@@ -43,7 +43,10 @@ module.exports.run = async(client, message, args, connection) => {
     .then(rows => {
         if(rows.length >= 1) {
             connection.query(`UPDATE roleplaydata SET punches = ${rows[0].punches + 1} WHERE userId = '${member.user.id}' AND guildId = '${message.guild.id}'`);
-            
+        } else {
+            connection.query(`INSERT INTO roleplaydata(guildId, userId, hugs, kisses, punches) VALUES('${message.guild.id}', '${member.user.id}', 0, 0, 1);`);
+        }
+
             const embed = new Discord.MessageEmbed();
     
             embed.setColor(config.defaultColor);
@@ -54,10 +57,6 @@ module.exports.run = async(client, message, args, connection) => {
             embed.setDescription(`<@${message.author.id}> has punched <@${member.user.id}> 👊`);
 
             message.channel.send(embed);
-        } else {
-            message.react(config.wrongEmoji);
-            return;
-        }
     });
 }
 

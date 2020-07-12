@@ -56,7 +56,7 @@ module.exports.run = async(client, message, args, connection) => {
         embed.setTitle("Roleplay information");
         embed.addField("Hugs 🤗", "```"  + rows[0].hugs + "```");
         embed.addField(`Kisses ${config.loveEmoji}`, "```"  + rows[0].kisses + "```");
-        embed.addField("Punches ✊", "```"  + rows[0].punches + "```");
+        embed.addField("Punches 👊", "```"  + rows[0].punches + "```");
 
         message.channel.send(embed);
     });
