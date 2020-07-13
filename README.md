@@ -5,7 +5,7 @@
 
 This is a multipurpose Discord bot. This bot is structured in different modules, which have different commands.
 
-The bot status is usually like this: Stable v1.0.0a | $help. Stable here means that it is stable to use and it is on my hosting, if its Indev, I do not recommend using it as it is currently in development and probably something is being fixed. v1.0.0a means the version, I usually put letters there indicating that the update is juat a bug fix.
+The bot status is usually like this: Stable v1.0.0a | $help. Stable here means that it is stable to use and it is on my hosting, if its Indev, I do not recommend using it as it is currently in development and probably something is being fixed. v1.0.0a means the version, I usually put letters there indicating that the update is just a bug fix.
 
 This documentation will explain each module. It'll also explain each and every command, moreover they will have an explanation and an example to them, so everyone can understand how to use them. If you see \<arg\>, that means you **must** type it in order for command to work, if its **[arg]**, then, its optional, you don't have to type it.
 # Modules
