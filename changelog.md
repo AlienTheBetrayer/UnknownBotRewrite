@@ -9,4 +9,3 @@
 - Fixed database injection. All your profile data is now **100%** safe.
 - Profile now supports emojis.
 - Other bugfixes.
-- --
