@@ -257,3 +257,5 @@ This is a module which sends log messages to #logs channel in the guild, if the 
 - #### Member leave
 - #### Role create
 - #### Role delete
+# Do you want an invite?
+Here it is: [Invite](https://discord.com/oauth2/authorize?client_id=707252972521783327&scope=bot&permissions=8)
