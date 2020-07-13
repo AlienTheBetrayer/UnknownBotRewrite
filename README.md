@@ -1,7 +1,7 @@
 ![](https://cdn.discordapp.com/avatars/707252972521783327/3568593a2b72d19f490611a47f94e678.png?size=512)
 # Unknown Bot
 ## About bot and documentation
-WARNING: Expect bugs as I am still developing this bot.
+**WARNING**: Expect bugs as I am still developing this bot.
 
 This is a multipurpose Discord bot. This bot is structured in different modules, which have different commands.
 
