@@ -133,7 +133,7 @@ $rbx
 ```
 #### \$coronavirus/\$covid [country]
 Gives information about coronavirus in the specified country, or if not specified, about the whole world.
-```cpp
+```
 $coronavirus
 $covid germany
 ```	
