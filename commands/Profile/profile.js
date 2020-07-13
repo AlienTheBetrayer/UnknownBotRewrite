@@ -31,8 +31,6 @@ function sqlQuery(con, query) {
         con.query(
             query,
             (error, results) => {
-                if (error) return reject(error);
-
                 return resolve(results);
             });
     });

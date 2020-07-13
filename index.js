@@ -98,7 +98,8 @@ var connection = mySQL.createConnection({
     host: sql_host,
     user: sql_user,
     password: sql_password,
-    database: sql_database
+    database: sql_database,
+    charset : 'utf8mb4'
 });
 
 connection.connect(err => {

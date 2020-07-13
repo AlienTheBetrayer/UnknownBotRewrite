@@ -4,15 +4,16 @@ const mySQL = require("mysql")
 const config = require("../../config.json");
 
 module.exports.run = async(client, message, args, connection) => {
-    const key = args[0];
+    const key = args[0].toLowerCase();
+    const key_ = args[0];
     const availableKeys = ["name", "age", "status", "mood", "love", "color", "avatar", "birthday"];
 
-    if(key == "ALL") {
+    if(key_ == "ALL") {
         let sql;
 
         sql = `DELETE FROM userprofile WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`;
 
-        connection.query(sql);
+        connection.query(sql);  
         message.react(config.correctEmoji);
         return;
     } 
@@ -32,7 +33,7 @@ module.exports.run = async(client, message, args, connection) => {
 
     let sql;
 
-    sql = `DELETE FROM userprofile WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}' AND data = '${key}'`;
+    sql = `DELETE FROM userprofile WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}' AND data = ${connection.escape(key.toLowerCase())}`;
 
     connection.query(sql);
     message.react(config.correctEmoji);

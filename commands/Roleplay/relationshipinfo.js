@@ -7,9 +7,7 @@ function sqlQuery(con, query) {
     return new Promise((resolve, reject) => {
         con.query(
             query,
-            (error, results) => {
-                if (error) return reject(error);
-                
+            (error, results) => {     
                 return resolve(results);
             });
     });

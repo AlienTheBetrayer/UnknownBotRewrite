@@ -24,7 +24,7 @@ module.exports.run = async(client, message, args, connection) => {
     }
 
     if(data == "ALL") {
-        let sql = `DELETE FROM userprofile WHERE userId = '${message.author.id}' AND guildId = '${guildName}'`;
+        let sql = `DELETE FROM userprofile WHERE userId = '${message.author.id}' AND guildId = ${connection.escape(guildName)}`;
         connection.query(sql);
 
         connection.query(`SELECT * FROM userprofile WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`, (err, rows) => {
@@ -40,7 +40,7 @@ module.exports.run = async(client, message, args, connection) => {
             }
 
             rows.forEach(row => {
-                let sql_ = `INSERT INTO userprofile(guildId, userId, data, value) VALUES('${guildName}', '${message.author.id}', '${row.data}', '${row.value}')`;
+                let sql_ = `INSERT INTO userprofile(guildId, userId, data, value) VALUES(${connection.escape(guildName)}, '${message.author.id}', '${row.data}', '${row.value}')`;
 
                 connection.query(sql_);
             });
@@ -63,11 +63,11 @@ module.exports.run = async(client, message, args, connection) => {
         return;
     }
 
-    let sql = `DELETE FROM userprofile WHERE userId = '${message.author.id}' AND guildId = '${guildName}' AND data = '${data}'`;
+    let sql = `DELETE FROM userprofile WHERE userId = '${message.author.id}' AND guildId = '${guildName}' AND data = ${connection.escape(data.toLowerCase())}`;
 
     connection.query(sql);
 
-    connection.query(`SELECT * FROM userprofile WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}' AND data = '${data}'`, (err, rows) => {
+    connection.query(`SELECT * FROM userprofile WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}' AND data = ${connection.escape(data.toLowerCase())}`, (err, rows) => {
         if(err) {
             console.log(err);
             message.react(config.wrongEmoji);
@@ -79,9 +79,10 @@ module.exports.run = async(client, message, args, connection) => {
             return;
         }
 
-        let sql_ = `INSERT INTO userprofile(guildId, userId, data, value) VALUES('${guildName}', '${message.author.id}', '${data}', '${rows[0].value}')`;
+        let sql_ = `INSERT INTO userprofile(guildId, userId, data, value) VALUES(${connection.escape(guildName)}, '${message.author.id}', ${connection.escape(data)}, '${rows[0].value}')`;
 
         connection.query(sql_);
+        message.react(config.correctEmoji);
     });
 }
 
