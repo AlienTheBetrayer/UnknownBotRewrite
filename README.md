@@ -1,6 +1,8 @@
 ![](https://cdn.discordapp.com/avatars/707252972521783327/3568593a2b72d19f490611a47f94e678.png?size=512)
 # Unknown Bot
 ## About bot and documentation
+WARNING: Expect bugs as I am still developing this bot.
+
 This is a multipurpose Discord bot. This bot is structured in different modules, which have different commands.
 
 This documentation will explain each module. It'll also explain each and every command, moreover they will have an explanation and an example to them, so everyone can understand how to use them. If you see \<arg\>, that means you **must** type it in order for command to work, if its **[arg]**, then, its optional, you don't have to type it.
