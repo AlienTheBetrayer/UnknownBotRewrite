@@ -83,7 +83,8 @@ module.exports.run = async(client, message, args) => {
         embed.setAuthor(message.author.username + "#" + message.author.discriminator, message.author.displayAvatarURL());
         embed.setTimestamp();
         embed.setFooter(`Type $help <module_name> to get information about specific module.`, client.user.displayAvatarURL());
-        embed.setTitle("Modules");
+        embed.setTitle("Available modules (press for documentation)");
+        embed.setURL("https://github.com/AlienTheBetrayer/UnknownBotRewrite/blob/master/README.md");
         
 
         embed.addField("**Help**", "```1 command ```", true);

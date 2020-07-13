@@ -5,6 +5,8 @@ const config = require("../.././config.json");
 module.exports.run = async(client, message, args) => {
     const msg = args.slice(0).join(" ");
 
+    if(msg.length <= 1) return;
+    
     message.delete();
 
     const embed = new Discord.MessageEmbed();
@@ -21,5 +23,5 @@ module.exports.run = async(client, message, args) => {
 
 module.exports.config = {
     name: "me",
-    aliases: [""]
+    aliases: []
 }

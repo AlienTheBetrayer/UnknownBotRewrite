@@ -36,20 +36,22 @@ module.exports.run = async(client, message, args) => {
     snekfetch.get(url + member.user.id).then(r => {
            let body = r.body; 
            
+           console.log(body);
+
            if(body.status != "ok") {
                 message.react(config.wrongEmoji);
                 return;
-           }
+           } 
 
            const embed = new Discord.MessageEmbed();
     
-           embed.setDescription(`${member.displayName}`);
            embed.setColor(config.defaultColor);
            embed.setAuthor(message.author.username + "#" + message.author.discriminator, message.author.displayAvatarURL());
            embed.setTimestamp();
            embed.setTitle("Roblox Profile");
            embed.setFooter(`${config.prefix}warn`, client.user.displayAvatarURL());
            embed.setURL(`https://www.roblox.com/users/${body.robloxId}/profile`)
+           embed.addField("Discord", "```" + member.displayName + "#" + member.user.discriminator + "```");
            embed.addField("Roblox Username", "```" + body.robloxUsername +"```");
            embed.addField("Roblox Identificator", "```" + body.robloxId +"```");
 

@@ -11,6 +11,9 @@ const pconfig = require("./private_config.json");
 
 // Config
 const prefix = config.prefix;
+const version = config.version;
+
+// Private config
 const token = pconfig.token;
 
 const sql_host = pconfig.host;
@@ -84,7 +87,7 @@ client.on("ready", () => { // Client boot event
         status = "Stable";
     }
 
-    client.user.setActivity(`${status} | ` + prefix + "help", {type: "STREAMING", url: "https://www.twitch.tv/alienbetrayer"});
+    client.user.setActivity(`${status} v${version} | ` + prefix + "help", {type: "STREAMING", url: "https://www.twitch.tv/alienbetrayer"});
     
     console.log(`\n ${cmds} commands and ${events} events have been successfully loaded.`);
 
@@ -181,16 +184,21 @@ client.on("message", async message => {  // Client message event
     });
         
 
-        if(sql) {
+    if(sql) {
         connection.query(sql);
-        }
+    }
 
-        if(sql_) {
+    if(sql_) {
         connection.query(sql_);
-        }
+    }
 
+    if(message.content.startsWith("<@!707252972521783327>")) {
+        message.channel.send("Hello! I am UnknownBot, my prefix is **$**.");
+        return;
+    }
+    
 
-    if (!message.content.startsWith(prefix)) return;
+    if (!message.content.startsWith(prefix) || message.content == "$") return;
 
     const parts = message.content.split(" ");
     const command = parts[0];
@@ -202,15 +210,6 @@ client.on("message", async message => {  // Client message event
          commandFile.run(client, message, args, connection);
     }
  });
-
-
-client.on("guildCreate", guild => {
-    createServer(guild.id, defaultSettings);
-});
-
-client.on("guildDelete", guild => {
-    client.guildSettings.delete(guild.id);
-});
 
 function FindChannel(channelName, messageObject) {
     return messageObject.guild.channels.cache.find(ch => ch.name === channelName); 

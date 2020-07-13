@@ -8,6 +8,8 @@ module.exports.run = async(client, message, args) => {
 
     const msg = args.slice(0).join(" ");
 
+    if(msg.length <= 1) return;
+
     message.delete();
 
     const embed = new Discord.MessageEmbed();
@@ -19,9 +21,9 @@ module.exports.run = async(client, message, args) => {
     embed.setDescription(`\`\`\`css\n${msg}\`\`\``);
 
     if(operation) {
-        embed.addField("Operation state", "Success");
+        embed.addField("Operation state", `Success ${config.correctEmoji}`);
     } else {
-        embed.addField("Operation state", "Failure");
+        embed.addField("Operation state", `Failure ${config.wrongEmoji}`);
     }
 
     message.channel.send(embed);
@@ -29,5 +31,5 @@ module.exports.run = async(client, message, args) => {
 
 module.exports.config = {
     name: "try",
-    aliases: [""]
+    aliases: []
 }
