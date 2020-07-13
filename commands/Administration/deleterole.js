@@ -16,14 +16,14 @@ module.exports.run = async(client, message, args) => {
         });
     }
 
-if(role_) {
-   role_.delete();
-   message.react(config.correctEmoji);
-} else {
-    message.react(config.wrongEmoji);
-}
+    if(role_) {
+    role_.delete();
+    message.react(config.correctEmoji);
+    } else {
+        message.react(config.wrongEmoji);
     }
-}  
+        }
+    }  
 
 module.exports.config = {
     name: "deleterole",

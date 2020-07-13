@@ -15,7 +15,7 @@ module.exports.run = async(client, message, args, connection) => {
 
     let percentage = random.int(0, 100);
 
-    connection.query(`SELECT * FROM loveMatch WHERE guildId = '${message.guild.id}' AND firstUser = '${firstPerson.toLowerCase()}' AND secondUser = '${secondPerson.toLowerCase()}' OR
+    connection.query(`SELECT * FROM lovematch WHERE guildId = '${message.guild.id}' AND firstUser = '${firstPerson.toLowerCase()}' AND secondUser = '${secondPerson.toLowerCase()}' OR
     guildId = '${message.guild.id}' AND firstUser = '${secondPerson.toLowerCase()}' AND secondUser = '${firstPerson.toLowerCase()}'`, (err, rows) => {
         if(err) {
             console.log(err);
@@ -28,7 +28,7 @@ module.exports.run = async(client, message, args, connection) => {
 
         if(rows.length < 1) { // doesnt exist    
             const percentage = random.int(0, 100);    
-            connection.query(`INSERT INTO loveMatch(guildId, firstUser, secondUser, percentage) VALUES('${message.guild.id}', '${firstPerson.toLowerCase()}', '${secondPerson.toLowerCase()}', ${percentage})`);
+            connection.query(`INSERT INTO lovematch(guildId, firstUser, secondUser, percentage) VALUES('${message.guild.id}', '${firstPerson.toLowerCase()}', '${secondPerson.toLowerCase()}', ${percentage})`);
 
             const rand = random.int(0, goodPhrases.length - 1);
 

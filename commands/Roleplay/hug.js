@@ -30,7 +30,7 @@ module.exports.run = async(client, message, args, connection) => {
         });
     }
 
-    if(!member && !args.slice(0).join(" ") || !found) {
+    if(!member && !found) {
         message.react(config.wrongEmoji);
         return;
     }

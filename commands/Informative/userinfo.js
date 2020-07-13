@@ -23,7 +23,7 @@ module.exports.run = async(client, message, args) => {
     }
     }
 
-    if(!found) {
+    if(!MEMBER && !found) {
         message.react(config.wrongEmoji);
         return; 
     }
@@ -58,7 +58,7 @@ module.exports.run = async(client, message, args) => {
     embed.setFooter(`${config.prefix}userinfo`, client.user.displayAvatarURL());
     
     if(memberActivities && memberActivities.state) {
-        embed.addField("Status", memberActivities.state);
+        embed.addField("Status", "```" + memberActivities.state + "```");
     } 
 
     message.channel.send(embed);

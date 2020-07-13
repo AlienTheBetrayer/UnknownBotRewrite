@@ -7,15 +7,15 @@ module.exports.run = async(client, message, args) => {
     const numberOfCommands = ["5", "6", "1", "3", "8", "10", "4", "2", "11"];
 
 
-    const modulesInfo = ["```• ¥eval <js_code>\n• ¥addrole <guild_member> <role>\n• ¥removerole <guild_member> <role>\n• ¥createrole [role_color] <role_name>\n• ¥deleterole <role_name>```", 
-    "```• ¥ban <guild_member> [reason]\n• ¥kick <guild_member> [reason]\n• ¥purge <number_of_messages> [guild_member]\n• ¥warn <member> [reason]\n• ¥report <member> <reason>```", 
-    "```• ¥help [module_name/¥command_name]```", 
-    "```• ¥match <person_one> <person_two>\n• ¥8ball <message>\n• ¥percentage <message>```",
-    "```• ¥avatar [guild_member]\n• ¥userinfo [guild_member]\n• ¥botinfo\n• ¥uptime\n• ¥ping\n• ¥guildinfo\n• ¥roblox```",
+    const modulesInfo = ["```• $eval <js_code>\n• $addrole <guild_member> <role>\n• $removerole <guild_member> <role>\n• $createrole [role_color] <role_name>\n• $deleterole <role_name>```", 
+    "```• $ban <guild_member> [reason]\n• $kick <guild_member> [reason]\n• $purge <number_of_messages> [guild_member]\n• $warn <member> [reason]\n• $report <member> <reason>```", 
+    "```• $help [module_name/$command_name]```", 
+    "```• $match <person_one> <person_two>\n• $8ball <message>\n• $percentage <message>```",
+    "```• $avatar [guild_member]\n• $covid [country]\n• $userinfo [guild_member]\n• $botinfo\n• $uptime\n• $ping\n• $guildinfo\n• $roblox```",
     "```• Message Delete\n• Message Bulk Delete\n• Message Edit\n• Emoji Create\n• Emoji Delete\n• Channel Create\n• Channel Delete\n• Member join\n• Member leave\n• Role create\n• Role Delete```",
-    "```• ¥changeprofile\n• ¥profile\n• ¥resetprofiledata\n• ¥transferprofile```",
-    "```• ¥lvl\n• ¥levels```",
-    "```• ¥breakup\n• ¥do\n• ¥hug\n• ¥kill\n• ¥kiss\n• ¥me\n• ¥punch\n• ¥relationship\n• ¥relationshipinfo\n• ¥roleplayinfo\n• ¥try```"];
+    "```• $changeprofile <data> <new_value>\n• $profile [guild_member]\n• $resetprofiledata <data>\n• $transferprofile <data> <guild_name>```",
+    "```• $lvl [guild_member]\n• $levels```",
+    "```• $breakup\n• $do <message>\n• $hug <guild_member>\n• $kill <guild_member>\n• $kiss <guild_member>\n• $me <message>\n• $punch <guild_member>\n• $relationship <guild_member>\n• $relationshipinfo <guild_member>\n• $roleplayinfo <guild_member>\n• $try```"];
     
 
     const modulesDescription = ["This is module for administration purposes. It has commands that only administrators can run.",
@@ -30,71 +30,51 @@ module.exports.run = async(client, message, args) => {
 
     // ------------------------------------
 
-    const commands = ["¥eval", "¥ban", "¥kick", "¥help", "¥match", "¥avatar", "¥addrole", "¥removerole", "¥createrole", "¥deleterole", "¥purge", "¥userinfo", "¥botinfo", "¥uptime", "¥ping"
-,"¥warn", "¥8ball", "¥guildinfo", "¥percentage", "¥roblox", "¥report", "¥changeprofile", "¥profile", "¥resetprofiledata", "¥transferprofile", "¥lvl",
-"¥breakup", "¥do", "¥hug", "¥kill", "¥kiss", "¥me", "¥punch", "¥relationship", "¥relationshipinfo", "¥roleplayinfo", "¥try", "¥coronavirus", "¥levels"];
+    const commands = ["$eval", "$ban", "$kick", "$help", "$match", "$avatar", "$addrole", "$removerole", "$createrole", "$deleterole", "$purge", "$userinfo", "$botinfo", "$uptime", "$ping"
+,"$warn", "$8ball", "$guildinfo", "$percentage", "$roblox", "$report", "$changeprofile", "$profile", "$resetprofiledata", "$transferprofile", "$lvl",
+"$breakup", "$do", "$hug", "$kill", "$kiss", "$me", "$punch", "$relationship", "$relationshipinfo", "$roleplayinfo", "$try", "$coronavirus", "$levels"];
 
 
 
-    const commandsInfo = [`\`\`\`¥eval <js_code> - Evaluates and runs javascript code, will return error description if the code isn't correct.\`\`\``,
-`\`\`\`¥ban <guild_member> [reason] - Bans guild member with optional reason.\`\`\``,
-`\`\`\`¥kick <guild_member> [reason] - Kicks guild member with optional reason.\`\`\``,
-`\`\`\`¥help {¥h} [module_name/${config.prefix}command_name] - Gives information about module or command.\`\`\``,
-`\`\`\`¥match <person_one> <person_two> - Tells whether person_one is a great soulmate to person_two. \`\`\``,
-`\`\`\`¥avatar {¥av} [optional_user] - Gives you optional_user's avatar picture, or yours if you didn't mention anybody.\`\`\``,
-`\`\`\`¥addrole {¥ar} <guild_member> <role> - Adds a role to the guild member.\`\`\``,
-`\`\`\`¥removerole {¥rr} <guild_member> <role> - Removes a role from guild member.\`\`\``,
-`\`\`\`¥createrole {¥cr} [#role_color] <role_name> - Creates a role with a name with an optional color.\`\`\``,
-`\`\`\`¥deleterole {¥dr} <role_name> - Deletes a role with a name.\`\`\``,
-`\`\`\`¥purge <number_of_messages> [guild_member] - Deletes amount of messages, deletes number_of_messages only by guild_member if guild_member is included.\`\`\``,
-`\`\`\`¥userinfo {¥ui} [guild_member] - Gives information about guild member.\`\`\``,
-`\`\`\`¥botinfo {¥bi} - Gives information about the bot.\`\`\``,
-`\`\`\`¥uptime - Gives how many time has elapsed since the start of the bot.\`\`\``,
-`\`\`\`¥ping - Gives bot's and API latency.\`\`\``,
-`\`\`\`¥warn <user> [reason] - Warns a user with an optional reason.\`\`\``,
-`\`\`\`¥8ball <message> - Replies randomly to a message.\`\`\``,
-`\`\`\`¥guildinfo {¥gi} - Gives information about current guild.\`\`\``,
-`\`\`\`¥percentage {¥%} <message> - Gives percentages between 1 and 100 on the specified message.\`\`\``,
-`\`\`\`¥roblox {¥rbx} [user] - Gives information about roblox user of the discord user.\`\`\``,
-`\`\`\`¥report <member> <reason> - Reports a member with a specified reason. \`\`\``,
-`\`\`\`¥changeprofile <data> <value> - Sets profile data with a new value. \n\n Available data: 'name', 'age', 'status', 'mood', 'love', 'color', 'avatar', 'birthday'. \`\`\``,
-`\`\`\`¥profile [member] - Shows you the profile of yourself or the member you mentioned. \`\`\``,
-`\`\`\`¥resetprofiledata <data> - Resets specific data in your profile. Set data to 'ALL' to reset everything.  \n\n Available data: 'name', 'age', 'status', 'mood', 'love', 'color', 'avatar', 'birthday'.  \`\`\``,
-`\`\`\`¥transferprofile <data> <guild_name> - Transfers specific data in your profile to specific guild. Set data to 'ALL' to transfer everything to that guild. \n\n Available data: 'name', 'age', 'status', 'mood', 'love', 'color', 'avatar', 'birthday'.  \`\`\``,
-`\`\`\`¥lvl [member] - Gives information about yours or user's level and experience. \`\`\``,
-`\`\`\`¥breakup - Break-ups with your current love, if you have one.- \`\`\``,
-`\`\`\`¥do <movement> - Does movement from third person.  \`\`\``,
-`\`\`\`¥hug <user> - Hugs user.  \`\`\``,
-`\`\`\`¥kill <user> - Kills user.  \`\`\``,
+    const commandsInfo = [`\`\`\`$eval <js_code> - Evaluates and runs javascript code, will return error description if the code isn't correct.\`\`\``,
+`\`\`\`$ban <guild_member> [reason] - Bans guild member with optional reason.\`\`\``,
+`\`\`\`$kick <guild_member> [reason] - Kicks guild member with optional reason.\`\`\``,
+`\`\`\`$help {$h} [module_name/$command_name] - Gives information about module or command.\`\`\``,
+`\`\`\`$match <person_one> <person_two> - Tells whether person_one is a great soulmate to person_two. \`\`\``,
+`\`\`\`$avatar {$av} [optional_user] - Gives you optional_user's avatar picture, or yours if you didn't mention anybody.\`\`\``,
+`\`\`\`$addrole {$ar} <guild_member> <role> - Adds a role to the guild member.\`\`\``,
+`\`\`\`$removerole {$rr} <guild_member> <role> - Removes a role from guild member.\`\`\``,
+`\`\`\`$createrole {$cr} [#role_color] <role_name> - Creates a role with a name with an optional color.\`\`\``,
+`\`\`\`$deleterole {$dr} <role_name> - Deletes a role with a name.\`\`\``,
+`\`\`\`$purge <number_of_messages> [guild_member] - Deletes amount of messages, deletes number_of_messages only by guild_member if guild_member is included.\`\`\``,
+`\`\`\`$userinfo {$ui} [guild_member] - Gives information about guild member.\`\`\``,
+`\`\`\`$botinfo {$bi} - Gives information about the bot.\`\`\``,
+`\`\`\`$uptime - Gives how many time has elapsed since the start of the bot.\`\`\``,
+`\`\`\`$ping - Gives bot's and API latency.\`\`\``,
+`\`\`\`$warn <user> [reason] - Warns a user with an optional reason.\`\`\``,
+`\`\`\`$8ball <message> - Replies randomly to a message.\`\`\``,
+`\`\`\`$guildinfo {$gi} - Gives information about current guild.\`\`\``,
+`\`\`\`$percentage {$%} <message> - Gives percentages between 1 and 100 on the specified message.\`\`\``,
+`\`\`\`$roblox {$rbx} [user] - Gives information about roblox user of the discord user.\`\`\``,
+`\`\`\`$report <member> <reason> - Reports a member with a specified reason. \`\`\``,
+`\`\`\`$changeprofile <data> <value> - Sets profile data with a new value. \n\n Available data: 'name', 'age', 'status', 'mood', 'love', 'color', 'avatar', 'birthday'. \`\`\``,
+`\`\`\`$profile [member] - Shows you the profile of yourself or the member you mentioned. \`\`\``,
+`\`\`\`$resetprofiledata <data> - Resets specific data in your profile. Set data to 'ALL' to reset everything.  \n\n Available data: 'name', 'age', 'status', 'mood', 'love', 'color', 'avatar', 'birthday'.  \`\`\``,
+`\`\`\`$transferprofile <data> <guild_name> - Transfers specific data in your profile to specific guild. Set data to 'ALL' to transfer everything to that guild. \n\n Available data: 'name', 'age', 'status', 'mood', 'love', 'color', 'avatar', 'birthday'.  \`\`\``,
+`\`\`\`$lvl [member] - Gives information about yours or user's level and experience. \`\`\``,
+`\`\`\`$breakup - Break-ups with your current love, if you have one.- \`\`\``,
+`\`\`\`$do <movement> - Does movement from third person.  \`\`\``,
+`\`\`\`$hug <user> - Hugs user.  \`\`\``,
+`\`\`\`$kill <user> - Kills user.  \`\`\``,
 `\`\`\`kiss <user> - Kisses user.  \`\`\``,
-`\`\`\`¥me <movement> - Does movement from your person.  \`\`\``,
-`\`\`\`¥punch <user> - Punches user.  \`\`\``,
-`\`\`\`¥relationship {rs} <user> - Proposes a relationship to user, if you and user don't have any love.  \`\`\``,
-`\`\`\`¥relationshipinfo {rsi} - Gives information about relationship, if you have one.  \`\`\``,
-`\`\`\`¥roleplayinfo {rpi} - Gives information about all your roleplay actions. (hug, kiss, etc.)  \`\`\``,
-`\`\`\`¥try <movement> - Tries a movement from your person.\`\`\``,
-`\`\`\`¥coronavirus {covid} [country] - Gets information about coronavirus state in the country or in the world. \`\`\``,
-`\`\`\`¥levels {leaderboard} - Gives leaderboard of all levels in current guild. \`\`\``]; 
-
-    for(A = 0; A < 5; ++A) {
-        for (i = 0; i < modulesInfo.length; ++i) {
-            if(modulesInfo[i].indexOf('¥') != -1) {
-                modulesInfo[i] = modulesInfo[i].replace('¥', config.prefix);
-            }
-        }
-
-        for(j = 0; j < commands.length; ++j) {
-            if(commands[j].indexOf('¥') != -1) {
-                commands[j] = commands[j].replace('¥', config.prefix);
-            }
-        }
-
-        for(j = 0; j < commandsInfo.length; ++j) {
-            if(commandsInfo[j].indexOf('¥') != -1) {
-                commandsInfo[j] = commandsInfo[j].replace('¥', config.prefix);
-            }
-        }
-    }
+`\`\`\`$me <movement> - Does movement from your person.  \`\`\``,
+`\`\`\`$punch <user> - Punches user.  \`\`\``,
+`\`\`\`$relationship {rs} <user> - Proposes a relationship to user, if you and user don't have any love.  \`\`\``,
+`\`\`\`$relationshipinfo {rsi} - Gives information about relationship, if you have one.  \`\`\``,
+`\`\`\`$roleplayinfo {rpi} - Gives information about all your roleplay actions. (hug, kiss, etc.)  \`\`\``,
+`\`\`\`$try <movement> - Tries a movement from your person.\`\`\``,
+`\`\`\`$coronavirus {covid} [country] - Gets information about coronavirus state in the country or in the world. \`\`\``,
+`\`\`\`$levels {leaderboard} - Gives leaderboard of all levels in current guild. \`\`\``]; 
 
     if (!args[0]) { // All module names
         const embed = new Discord.MessageEmbed();
@@ -102,7 +82,7 @@ module.exports.run = async(client, message, args) => {
         embed.setColor(config.defaultColor);
         embed.setAuthor(message.author.username + "#" + message.author.discriminator, message.author.displayAvatarURL());
         embed.setTimestamp();
-        embed.setFooter(`Type ${config.prefix}help <module_name> to get information about specific module.`, client.user.displayAvatarURL());
+        embed.setFooter(`Type $help <module_name> to get information about specific module.`, client.user.displayAvatarURL());
         embed.setTitle("Modules");
         
 

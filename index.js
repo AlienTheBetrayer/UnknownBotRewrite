@@ -262,7 +262,15 @@ function log(embedObject, logType, guildId) {
 }
 
 client.on("messageDelete", async message => {
-    if(message.author.bot || message.content.startsWith("$me") || message.content.startsWith("$try") || message.content.startsWith("$do")) return;
+    if(message.author.bot) return;
+
+    const messages = ["$me", "$do", "$try"];
+
+    for(i = 0; i < messages.length; ++i) {
+        if(message.content.startsWith(messages[i])) {
+            return;
+        }
+    }
 
     for(i = 0; i < message.content.length; ++i) {
         const found = message.content.indexOf("`");
