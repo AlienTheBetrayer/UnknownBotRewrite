@@ -92,6 +92,17 @@ Gives a percentage on your message.
 ```
 $percentage How well is this bot made?
 ```
+#### \$random/\$rand \<min\> \<max\>
+Gives a random number in between range from min to max.
+```
+$rand 10 100
+$random 0 999
+```
+#### \$randomitem/\$randitem \<message\>
+Gives a random item in your message.
+```
+$randitem Apple Banana Orange Mango
+```
 ## Informative
 This module gives information about something or someone.
 
@@ -135,12 +146,6 @@ Gives roblox id, username, and link to the profile of the specified guild, if no
 $roblox @username
 $rbx
 ```
-#### \$coronavirus/\$covid [country]
-Gives information about coronavirus in the specified country, or if not specified, about the whole world.
-```
-$coronavirus
-$covid germany
-```	
 ## Help
 This module is for help purposes.
 #### \$help/\$h [module_name/\$command_name]

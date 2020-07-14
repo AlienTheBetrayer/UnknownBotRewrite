@@ -4,12 +4,27 @@ const config = require("../.././config.json");
 const random = require("random");
 
 module.exports.run = async(client, message, args) => {
-    const msg = args.slice(0).join(" ");
+    let msg = args.slice(0).join(" ");
 
     if(!msg) {
         message.react(config.wrongEmoji);
         return;
     }
+
+    const users = [];
+
+    msg.match(/<@![0-9]{18}>/g).forEach(str => {
+        users.push(str.substr(3, str.length - 4));
+    });
+
+    console.log(users);
+
+    users.forEach(user => {
+        if(msg.indexOf(user) != -1) {
+
+            msg = msg.replace(`<@!${user}>`, message.guild.members.cache.get(user).displayName);
+        }
+    });
 
     const rand = random.int(1, 100);
 

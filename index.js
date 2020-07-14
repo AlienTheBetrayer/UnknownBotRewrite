@@ -144,7 +144,7 @@ client.on("message", async message => {  // Client message event
             currentLevel = rows[0].level;
 
             addXp = random.int(xpRange[0], xpRange[1]);
-            levelupXp = currentLevel * currentLevel * (100 / currentLevel);
+            levelupXp = 25 * currentLevel * (currentLevel + 1);
             
             if(currentXp >= levelupXp || currentXp + addXp >= levelupXp) {
                 level = currentLevel + 1;

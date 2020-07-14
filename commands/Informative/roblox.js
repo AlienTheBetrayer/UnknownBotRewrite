@@ -36,8 +36,6 @@ module.exports.run = async(client, message, args) => {
     snekfetch.get(url + member.user.id).then(r => {
            let body = r.body; 
            
-           console.log(body);
-
            if(body.status != "ok") {
                 message.react(config.wrongEmoji);
                 return;

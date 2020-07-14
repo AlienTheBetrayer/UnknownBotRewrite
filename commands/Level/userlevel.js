@@ -40,7 +40,7 @@ module.exports.run = async(client, message, args, connection) => {
         const currentLevel = rows[0].level;
         const currentXp = rows[0].xp;
     
-        levelupXp = currentLevel * currentLevel * (100 / currentLevel);
+        levelupXp = 25 * currentLevel * (currentLevel + 1);
             
         const neededXp = levelupXp - currentXp;
         const havePercentage = 100 - Math.floor((neededXp / levelupXp) * 100);
