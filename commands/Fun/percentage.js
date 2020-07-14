@@ -13,11 +13,12 @@ module.exports.run = async(client, message, args) => {
 
     const users = [];
 
-    msg.match(/<@![0-9]{18}>/g).forEach(str => {
-        users.push(str.substr(3, str.length - 4));
-    });
-
-    console.log(users);
+    const match = msg.match(/<@![0-9]{18}>/g);
+    if(match) {
+        match.forEach(str => {
+            users.push(str.substr(3, str.length - 4));
+        });
+    }
 
     users.forEach(user => {
         if(msg.indexOf(user) != -1) {
