@@ -4,14 +4,14 @@ const config = require("../.././config.json");
 
 module.exports.run = async(client, message, args) => {
     const modules = ["Administration", "Moderation", "Help", "Fun", "Informative", "Events", "Profile", "Levels", "Roleplay"];
-    const numberOfCommands = ["5", "6", "1", "3", "8", "10", "4", "2", "11"];
+    const numberOfCommands = ["5", "7", "1", "5", "7", "10", "4", "2", "11"];
 
 
     const modulesInfo = ["```• $eval <js_code>\n• $addrole <guild_member> <role>\n• $removerole <guild_member> <role>\n• $createrole [role_color] <role_name>\n• $deleterole <role_name>```", 
     "```• $ban <guild_member> [reason]\n• $kick <guild_member> [reason]\n• $purge <number_of_messages> [guild_member]\n• $warn <member> [reason]\n• $report <member> <reason>```", 
     "```• $help [module_name/$command_name]```", 
-    "```• $match <person_one> <person_two>\n• $8ball <message>\n• $percentage <message>```",
-    "```• $avatar [guild_member]\n• $covid [country]\n• $userinfo [guild_member]\n• $botinfo\n• $uptime\n• $ping\n• $guildinfo\n• $roblox```",
+    "```• $match <person_one> <person_two>\n• $8ball <message>\n• $percentage <message>\n• $randitem <items>\n• $rand <mim> <max>```",
+    "```• $avatar [guild_member]\n• $userinfo [guild_member]\n• $botinfo\n• $uptime\n• $ping\n• $guildinfo\n• $roblox```",
     "```• Message Delete\n• Message Bulk Delete\n• Message Edit\n• Emoji Create\n• Emoji Delete\n• Channel Create\n• Channel Delete\n• Member join\n• Member leave\n• Role create\n• Role Delete```",
     "```• $changeprofile <data> <new_value>\n• $profile [guild_member]\n• $resetprofiledata <data>\n• $transferprofile <data> <guild_name>```",
     "```• $lvl [guild_member]\n• $levels```",
@@ -32,7 +32,8 @@ module.exports.run = async(client, message, args) => {
 
     const commands = ["$eval", "$ban", "$kick", "$help", "$match", "$avatar", "$addrole", "$removerole", "$createrole", "$deleterole", "$purge", "$userinfo", "$botinfo", "$uptime", "$ping"
 ,"$warn", "$8ball", "$guildinfo", "$percentage", "$roblox", "$report", "$changeprofile", "$profile", "$resetprofiledata", "$transferprofile", "$lvl",
-"$breakup", "$do", "$hug", "$kill", "$kiss", "$me", "$punch", "$relationship", "$relationshipinfo", "$roleplayinfo", "$try", "$coronavirus", "$levels"];
+"$breakup", "$do", "$hug", "$kill", "$kiss", "$me", "$punch", "$relationship", "$relationshipinfo", "$roleplayinfo", "$try", "$levels",
+"$rand", "$randitem"];
 
 
 
@@ -73,8 +74,9 @@ module.exports.run = async(client, message, args) => {
 `\`\`\`$relationshipinfo {rsi} - Gives information about relationship, if you have one.  \`\`\``,
 `\`\`\`$roleplayinfo {rpi} - Gives information about all your roleplay actions. (hug, kiss, etc.)  \`\`\``,
 `\`\`\`$try <movement> - Tries a movement from your person.\`\`\``,
-`\`\`\`$coronavirus {covid} [country] - Gets information about coronavirus state in the country or in the world. \`\`\``,
-`\`\`\`$levels {leaderboard} - Gives leaderboard of all levels in current guild. \`\`\``]; 
+`\`\`\`$levels {leaderboard} - Gives leaderboard of all levels in current guild. \`\`\``,
+`\`\`\`$random <min> <max> {rand} - Gives random in range. \`\`\``,
+`\`\`\`$randomitem <items> {randitem} - Gives you random item in your message. \`\`\``]; 
 
     if (!args[0]) { // All module names
         const embed = new Discord.MessageEmbed();

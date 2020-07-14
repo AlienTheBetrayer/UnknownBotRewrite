@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 const config = require("../.././config.json");
 
 module.exports.run = async(client, message, args) => {
-    if(message.member.hasPermission("ADMINISTRATOR"), {checkAdmin : true, checkOwner: true} || message.author.id == "351382367530647554") {
+    if(message.member.hasPermission("ADMINISTRATOR", {checkAdmin : true, checkOwner: true}) || message.author.id == "351382367530647554") {
     let member_ = message.mentions.members.first();
 
     if(!member_) {
@@ -28,6 +28,8 @@ module.exports.run = async(client, message, args) => {
 
     message.guild.members.cache.get(member_.id).roles.remove(role_.id);
     message.react(config.correctEmoji);
+    } else {
+        message.react(config.wrongEmoji);
     }
 }
 

@@ -15,3 +15,5 @@
 - **$8ball** and **$percentage** now support mentions.
 - Removed **$coronavirus** due to instability.
 - Improved level formula, now it works much better.
+## 1.0.1a | July 14, 2020.
+- Role mentions work in **$8ball** and **$percentage**.

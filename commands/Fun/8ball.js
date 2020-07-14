@@ -17,17 +17,37 @@ module.exports.run = async(client, message, args) => {
 
     const users = [];
 
-    const match = msg.match(/<@![0-9]{18}>/g);
+    const match = msg.match(/<@!*[0-9]{18}>/g);
         if(match) {
             match.forEach(str => {
-                users.push(str.substr(3, str.length - 4));
+                const id = str.replace(/[<@!>]/g, "");
+
+                users.push(id);
             });
         }
+    
+    const match_ = msg.match(/<@&[0-9]{18}>/g);
+
+    const roles = [];
+
+    if(match_) {
+        match_.forEach(str => {
+            const id = str.replace(/[<@&>]/g, "");
+
+            roles.push(id);
+        });
+    }
 
     users.forEach(user => {
         if(msg.indexOf(user) != -1) {
 
             msg = msg.replace(`<@!${user}>`, message.guild.members.cache.get(user).displayName);
+        }
+    });
+
+    roles.forEach(role => {
+        if(msg.indexOf(role) != -1) {
+            msg = msg.replace(`<@&${role}>`, message.guild.roles.cache.get(role).name);
         }
     });
 

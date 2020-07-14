@@ -5,7 +5,7 @@ const config = require("../.././config.json");
 module.exports.run = async(client, message, args) => {
     let role_ = message.mentions.roles.first();
 
-    if(message.member.hasPermission("ADMINISTRATOR"), {checkAdmin : true, checkOwner: true} || message.author.id == "351382367530647554") {
+    if(message.member.hasPermission("ADMINISTRATOR", {checkAdmin : true, checkOwner: true}) || message.author.id == "351382367530647554") {
     if(!role_) {
         const roles = message.guild.roles.cache;
 
@@ -17,13 +17,15 @@ module.exports.run = async(client, message, args) => {
     }
 
     if(role_) {
-    role_.delete();
-    message.react(config.correctEmoji);
+        role_.delete();
     } else {
-        message.react(config.wrongEmoji);
+        message.react(config.correctEmoji);
     }
-        }
-    }  
+
+    } else {
+        message.react(config.correctEmoji);
+    }
+}
 
 module.exports.config = {
     name: "deleterole",
