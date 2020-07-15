@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 const config = require("../.././config.json");
 
 module.exports.run = async(client, message, args) => {
-    if(message.member.hasPermission("BAN_MEMBERS"), {checkAdmin : true, checkOwner: true} || message.author.id == "351382367530647554") {
+    if(message.member.hasPermission("BAN_MEMBERS", {checkAdmin : true, checkOwner: true}) || message.author.id == "351382367530647554") {
         if(args[0].substr(0, 3) == "<@!" && args[0].substr(args[0].length - 1, 1) == ">") {
             const banList = await message.guild.fetchBans(); // Mention
             const userId = args[0].substring(3, args[0].length - 1);

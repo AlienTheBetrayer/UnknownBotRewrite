@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 const config = require("../.././config.json");
 
 module.exports.run = async(client, message, args) => {
-    if(message.member.hasPermission("MANAGE_MESSAGES"), {checkAdmin : true, checkOwner: true} || message.author.id == "351382367530647554") {
+    if(message.member.hasPermission("MANAGE_MESSAGES", {checkAdmin : true, checkOwner: true}) || message.author.id == "351382367530647554") {
     let member = message.mentions.members.first();
     const reason = args.slice(1).join(" ");
     let readReason = "Not specified.";
