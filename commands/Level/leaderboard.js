@@ -75,7 +75,6 @@ module.exports.run = async(client, message, args, connection) => {
         }
 
         for(i = 1; i <= len; ++i) {
-            console.log(sortedRows);
             const userName = message.guild.members.cache.find(gm => gm.user.id == sortedRows[i - 1].userId).displayName;
             embed.addField(`**${i}**`, `\`\`\`glsl\n# ${userName}\nLevel ${sortedRows[i - 1].level} | ${sortedRows[i - 1].xp} xp.\`\`\``);
         }

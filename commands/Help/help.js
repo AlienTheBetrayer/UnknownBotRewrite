@@ -76,6 +76,7 @@ module.exports.run = async(client, message, args) => {
 `\`\`\`$try <movement> - Tries a movement from your person.\`\`\``,
 `\`\`\`$levels {leaderboard} - Gives leaderboard of all levels in current guild. \`\`\``,
 `\`\`\`$random <min> <max> {rand} - Gives random in range. \`\`\``,
+`\`\`\`$randitem <items> - Gives random item in your message. \`\`\``,
 `\`\`\`$github - Gives a link to bot's github page.\`\`\``,
 `\`\`\`$documentation - Gives a link to bot's documentation github page. \`\`\``,
 `\`\`\`$changelog - Gives a link to bot's changelog github page. \`\`\``];
