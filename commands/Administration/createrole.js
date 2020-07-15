@@ -20,10 +20,10 @@ module.exports.run = async(client, message, args) => {
        color : roleColor 
     }});
     
-    message.react(config.correctEmoji);
-} else {
-    message.react(config.correctEmoji);
-}
+        message.react(config.correctEmoji);
+    } else {
+        message.react(config.wrongEmoji);
+    }
 
 }
 

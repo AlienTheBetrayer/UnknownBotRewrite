@@ -4,12 +4,12 @@ const config = require("../.././config.json");
 
 module.exports.run = async(client, message, args) => {
     const modules = ["Administration", "Moderation", "Help", "Fun", "Informative", "Events", "Profile", "Levels", "Roleplay"];
-    const numberOfCommands = ["5", "7", "1", "5", "7", "10", "4", "2", "11"];
+    const numberOfCommands = ["5", "7", "4", "5", "7", "10", "4", "2", "11"];
 
 
     const modulesInfo = ["```• $eval <js_code>\n• $addrole <guild_member> <role>\n• $removerole <guild_member> <role>\n• $createrole [role_color] <role_name>\n• $deleterole <role_name>```", 
     "```• $ban <guild_member> [reason]\n• $kick <guild_member> [reason]\n• $purge <number_of_messages> [guild_member]\n• $warn <member> [reason]\n• $report <member> <reason>```", 
-    "```• $help [module_name/$command_name]```", 
+    "```• $help [module_name/$command_name]\n• $changelog\n• $github\n• $documentation```", 
     "```• $match <person_one> <person_two>\n• $8ball <message>\n• $percentage <message>\n• $randitem <items>\n• $rand <mim> <max>```",
     "```• $avatar [guild_member]\n• $userinfo [guild_member]\n• $botinfo\n• $uptime\n• $ping\n• $guildinfo\n• $roblox```",
     "```• Message Delete\n• Message Bulk Delete\n• Message Edit\n• Emoji Create\n• Emoji Delete\n• Channel Create\n• Channel Delete\n• Member join\n• Member leave\n• Role create\n• Role Delete```",
@@ -33,7 +33,7 @@ module.exports.run = async(client, message, args) => {
     const commands = ["$eval", "$ban", "$kick", "$help", "$match", "$avatar", "$addrole", "$removerole", "$createrole", "$deleterole", "$purge", "$userinfo", "$botinfo", "$uptime", "$ping"
 ,"$warn", "$8ball", "$guildinfo", "$percentage", "$roblox", "$report", "$changeprofile", "$profile", "$resetprofiledata", "$transferprofile", "$lvl",
 "$breakup", "$do", "$hug", "$kill", "$kiss", "$me", "$punch", "$relationship", "$relationshipinfo", "$roleplayinfo", "$try", "$levels",
-"$rand", "$randitem"];
+"$rand", "$randitem", "$github", "$documentation", "$changelog"];
 
 
 
@@ -67,7 +67,7 @@ module.exports.run = async(client, message, args) => {
 `\`\`\`$do <movement> - Does movement from third person.  \`\`\``,
 `\`\`\`$hug <user> - Hugs user.  \`\`\``,
 `\`\`\`$kill <user> - Kills user.  \`\`\``,
-`\`\`\`kiss <user> - Kisses user.  \`\`\``,
+`\`\`\`$kiss <user> - Kisses user.  \`\`\``,
 `\`\`\`$me <movement> - Does movement from your person.  \`\`\``,
 `\`\`\`$punch <user> - Punches user.  \`\`\``,
 `\`\`\`$relationship {rs} <user> - Proposes a relationship to user, if you and user don't have any love.  \`\`\``,
@@ -76,7 +76,9 @@ module.exports.run = async(client, message, args) => {
 `\`\`\`$try <movement> - Tries a movement from your person.\`\`\``,
 `\`\`\`$levels {leaderboard} - Gives leaderboard of all levels in current guild. \`\`\``,
 `\`\`\`$random <min> <max> {rand} - Gives random in range. \`\`\``,
-`\`\`\`$randomitem <items> {randitem} - Gives you random item in your message. \`\`\``]; 
+`\`\`\`$github - Gives a link to bot's github page.\`\`\``,
+`\`\`\`$documentation - Gives a link to bot's documentation github page. \`\`\``,
+`\`\`\`$changelog - Gives a link to bot's changelog github page. \`\`\``];
 
     if (!args[0]) { // All module names
         const embed = new Discord.MessageEmbed();

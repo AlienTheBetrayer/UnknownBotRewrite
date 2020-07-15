@@ -23,7 +23,7 @@ module.exports.run = async(client, message, args) => {
     }
 
     } else {
-        message.react(config.correctEmoji);
+        message.react(config.wrongEmoji);
     }
 }
 

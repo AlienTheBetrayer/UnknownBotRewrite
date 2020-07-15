@@ -68,17 +68,16 @@ module.exports.run = async(client, message, args, connection) => {
         embed.setTimestamp();
         embed.setFooter(`${config.prefix}leaderboard`, client.user.displayAvatarURL());
 
-        let len = 10;
+        let len = 5;
 
-        if(sortedRows.length < 10) {
+        if(sortedRows.length < len) {
             len = sortedRows.length;
         }
 
-        for(i = 0; i < len; ++i) {
+        for(i = 1; i <= len; ++i) {
             console.log(sortedRows);
-            const userName = message.guild.members.cache.find(gm => gm.user.id == sortedRows[i].userId).displayName;
-            const index = i + 1;
-            embed.addField("**" + index + "**", "```" + `\n${userName}` + "\nLevel: " + sortedRows[i].level + "\nXp: " + sortedRows[i].xp + "```");
+            const userName = message.guild.members.cache.find(gm => gm.user.id == sortedRows[i - 1].userId).displayName;
+            embed.addField(`**${i}**`, `\`\`\`glsl\n# ${userName}\nLevel ${sortedRows[i - 1].level} | ${sortedRows[i - 1].xp} xp.\`\`\``);
         }
 
         message.channel.send(embed);
@@ -88,5 +87,5 @@ module.exports.run = async(client, message, args, connection) => {
 
 module.exports.config = {
     name: "leaderboard",
-    aliases: ["levels"]
+    aliases: ["levels", "top", "lvls"]
 }

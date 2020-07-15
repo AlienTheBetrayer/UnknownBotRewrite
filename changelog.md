@@ -17,3 +17,9 @@
 - Improved level formula, now it works much better.
 ## 1.0.1a | July 14, 2020.
 - Role mentions work in **$8ball** and **$percentage**.
+## 1.0.2 | July 15, 2020.
+- Added **$changelog**
+- Added **$github**
+- Added **$documentation**
+- Updated leaderboard, it is now more compact and top-5, instead of top-10.
+- Fixed some bugs.

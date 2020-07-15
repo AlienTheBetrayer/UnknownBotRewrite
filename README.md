@@ -155,6 +155,21 @@ $h
 $help fun
 $help $rbx
 ```
+#### \$changelog
+Gives link to bot's changelog github page.
+```
+$changelog
+```
+#### \$github
+Gives link to bot's github page.
+```
+$github
+```
+#### \$documentation
+Gives link to bot's documentation github page.
+```
+$documentation
+```
 ## Profile
 Profile system module. Each guild member can have their own profile with their own style.
 All data that you can enter in the commands below:
