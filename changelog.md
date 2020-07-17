@@ -23,3 +23,5 @@
 - Added **$documentation**
 - Updated leaderboard, it is now more compact and top-5, instead of top-10.
 - Fixed some bugs.
+## 1.0.3 | July 17, 2020.
+- Added cooldown to commands.

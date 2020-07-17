@@ -5,7 +5,8 @@ const config = require("../.././config.json");
 
 module.exports.run = async(client, message, args) => {
     const replies = ["No...", "Yes!", "No!", "Never.", "Try again.", "Doesn't matter...", "Definitely!", "Probably.", "Maybe.", "Why do you even ask?", "Nah.", "Yep!", "Yeah!",
-        "I don't think so...", "Most likely.", "Can't predict.", "You shouldn't know this...", "Very doubtful.", "I'll tell you later..."];
+        "I don't think so...", "Most likely.", "Can't predict.", "You shouldn't know this...", "Very doubtful.", "I'll tell you later...",
+    ""];
     const randomReply = random.int(0, replies.length - 1);
 
     let msg = args.slice(0).join(" ");
