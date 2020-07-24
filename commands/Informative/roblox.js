@@ -5,14 +5,6 @@ const config = require("../../config.json");
 
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
-function httpGet(theUrl)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-    xmlHttp.send( null );
-    return xmlHttp.responseText;
-}
-
 module.exports.run = async(client, message, args) => {
     let member = message.mentions.members.first();
     let found = false;

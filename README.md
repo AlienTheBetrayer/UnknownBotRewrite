@@ -1,3 +1,4 @@
+
 ![](https://cdn.discordapp.com/avatars/707252972521783327/3568593a2b72d19f490611a47f94e678.png?size=512)
 # Unknown Bot
 ## About bot and documentation
@@ -75,8 +76,78 @@ $warn username
 $report @username He is cursing on me in DMs! :(
 ```
 Reports a specified guild member with a message, all reports go to **#reports** channel. If the channel does not exist, it creates a new one.
+## Coins
+This is a coins module, which has a system of coins, store, inventory, buying differen store items, etc.
+#### $buyitem \<item_name\>
+Buys an item in a store with specified name.
+```
+$buyitem Epic item
+```
+#### $coins [guild_member]
+Tells how many coins do you have, or guild member, if specified.
+```
+$coins
+$coins @Somebody
+```
+#### $createitem \<cost\> \<item_name\>
+Creates an item in the store with specified cost and name. Only administrators of the guild can use this command.
+```
+$createitem 1000 This item is not so expensive
+```
+#### $createstore
+Creates a store in the guild, two items get automatically created. Only administrators of the guild can use this command.
+```
+$createstore
+```
+#### $deleteitem \<item_name\>
+Deletes an item from the guild's store. Only administrators of the guild can use this command.
+```
+$deleteitem Item name
+```
+#### $deletestore
+Deletes a store in the guild. Only administrators of the guild can use this command.
+```
+$deletestore
+```
+#### $inventory
+Gives you every single item in your inventory.
+```
+$inventory
+```
+#### $store
+Gives you every single item in a store in a guild.
+```
+$store
+```
+#### $transfercoins \<amount\> \<guild_member\>
+Transfers coins from one guild member to another.
+```
+$transfercoins 100 @Name
+```
+#### $getitemdescription/\$getiteminfo \<item_name\>
+Gets description of the item.
+```
+$getiteminfo Cool item
+```
+#### $setitemdescription/\$setiteminfo \<item_name\> | \<item_description\>
+Sets item's description.
+```
+$setitemdescription Cool item name | This is a cool description
+```
 ## Fun
 This module has commands that you can have fun with.
+#### $embedmessage/\$embedmsg \<message\>
+Sends an embed message to the channel, you can get this command by buying it in the store of your guild, if it  exists.
+```
+$embedmessage Hello, this is a message! :)
+$embedmsg Short message.
+```
+#### $embedmessagecolor/\$embedmsgclr \<message\>
+Sends an embed message to the channel, you can get this command by buying the **$embedmessage** command, and an upgrade to it in the stoe of your guild, if it exists.
+```
+$embedmessagecolor 9140cf Epic purple message.
+$embedmsgclr ff0000 This is a red message.
+```
 #### $match <person_one> <person_two>
 Matches two people, gives the percentage of their love and a corresponding message. Supports mentions.
 ```

@@ -89,7 +89,7 @@ client.on("ready", () => { // Client boot event
 
     client.user.setActivity(`${status} v${version} | ` + prefix + "help", {type: "STREAMING", url: "https://www.twitch.tv/alienbetrayer"});
     
-    console.log(`\n ${cmds} commands and ${events} events have been successfully loaded.`);
+    console.log(`\n${cmds} commands and ${events} events have been successfully loaded.`);
 
     console.log("\n[BOOT] Bot has started. \n\n");
 });
@@ -113,79 +113,97 @@ function sqlQuery(con, query) {
         con.query(
             query,
             (error, results) => {
-                if (error) return reject(error);
-                
                 return resolve(results);
             });
     });
 }
 
 let cooldown = new Set();
-let cooldownSeconds = 5;
+const cooldownSeconds = 5;
 
 client.on("message", async message => {  // Client message event
-    if (message.author.bot) return;
-    if (message.channel.type == "dm") return;
+    if (message.author.bot || message.channel.type == "dm" || cooldown.has(message.author.id))
+        return;
 
-    if(cooldown.has(message.author.id)) return;
-
-    //if(!message.member.hasPermission("ADMINISTRATOR")) {
+    if(!message.member.hasPermission("ADMINISTRATOR") && message.author.id != "351382367530647554") {
         cooldown.add(message.author.id);
-  //  }
-
+    }
 
     if(message.content.startsWith("<@!707252972521783327>")) { // bot says hello
         message.channel.send("Hello! I am UnknownBot, my prefix is **$**.");
         return;
     }
 
+    await sqlQuery(connection, `SELECT * FROM userlevel WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`)
+    .then(rows => {
+        if(rows.length < 1) {
+            const defaultStats = [0, 1];
+
+            connection.query(`INSERT INTO userlevel(userId, guildId, xp, level) VALUES('${message.author.id}', '${message.guild.id}', ${defaultStats[0]}, ${defaultStats[1]})`);
+        }
+    });
+
+    await sqlQuery(connection, `SELECT * FROM coins WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`)
+    .then(rows => {
+        if(rows.length < 1) {
+            const defaultCoin = 0;
+
+            connection.query(`INSERT INTO coins(userId, guildId, amount) VALUES(${message.author.id}, ${message.guild.id}, ${defaultCoin})`)
+        }
+    });
+
     if(!message.content.startsWith("$")) { // not command, meaning you can get level with ti
         let sql, sql_;
 
         await sqlQuery(connection, `SELECT * FROM userlevel WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`)
-        .then(rows => {
-            if (message.content.startsWith(prefix)) return;
+        .then(async rows => {
+            if (message.content.startsWith(prefix))
+                return;
 
-            if(rows.length < 1) { // default value;
-                const defaultStats = [0, 1]; // xp : level
+            const xpRange = [10, 30];  
 
-                sql = `INSERT INTO userlevel(userId, guildId, xp, level) VALUES('${message.author.id}', '${message.guild.id}', ${defaultStats[0]}, ${defaultStats[1]})`;
-            } else { // update
-                const xpRange = [10, 30];  
+            let level, levelupXp, addXp;
+            let currentXp, currentLevel;
 
-                let level, levelupXp, addXp;
-                let currentXp, currentLevel;
+            currentXp = rows[0].xp;
+            currentLevel = rows[0].level;
 
-                currentXp = rows[0].xp;
-                currentLevel = rows[0].level;
+            addXp = random.int(xpRange[0], xpRange[1]);
+            levelupXp = 25 * currentLevel * (currentLevel + 1);
+            
+            if(currentXp >= levelupXp || currentXp + addXp >= levelupXp) {
+                level = currentLevel + 1;
 
-                addXp = random.int(xpRange[0], xpRange[1]);
-                levelupXp = 25 * currentLevel * (currentLevel + 1);
-                
-                if(currentXp >= levelupXp || currentXp + addXp >= levelupXp) {
-                    level = currentLevel + 1;
+                const embed = new Discord.MessageEmbed();
+    
+                embed.setColor(config.defaultColor);
+                embed.setAuthor(message.author.username + "#" + message.author.discriminator, message.author.displayAvatarURL());
+                embed.setTimestamp();
+                embed.setFooter(`$lvl`, client.user.displayAvatarURL());
+                embed.setTitle("Level up!");
+                embed.setDescription("Congratulations on reaching new level!")
+                embed.addField("New level", "```" + level + "```");
 
-                    const embed = new Discord.MessageEmbed();
-        
-                    embed.setColor(config.defaultColor);
-                    embed.setAuthor(message.author.username + "#" + message.author.discriminator, message.author.displayAvatarURL());
-                    embed.setTimestamp();
-                    embed.setFooter(`$lvl`, client.user.displayAvatarURL());
-                    embed.setTitle("Level up!");
-                    embed.setDescription("Congratulations on reaching new level!")
-                    embed.addField("New level", "```" + level + "```");
+                let msg = message.channel.send(embed)
+                .then(msg => {
+                    msg.delete({timeout : 15000});
+                });
 
-                    let msg = message.channel.send(embed)
-                    .then(msg => {
-                        msg.delete({timeout : 10000});
-                    });
+                sql = `UPDATE userlevel SET level = ${level} WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`;
+                sql_ = `UPDATE userlevel SET xp = 0 WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`;
 
-                    sql = `UPDATE userlevel SET level = ${level} WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`;
-                    sql_ = `UPDATE userlevel SET xp = 0 WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`;
-                } else {        
-                    sql = `UPDATE userlevel SET xp = ${currentXp + addXp} WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`;
-                    sql_ = `UPDATE userlevel SET level = ${currentLevel} WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`;
-                }
+                // coin update
+
+                await sqlQuery(connection, `SELECT * FROM coins WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`)
+                .then(async rows_ => {
+                    const currentCoins = rows_[0].amount;
+
+                    await sqlQuery(connection, `UPDATE coins SET amount = ${currentCoins + level * 14} WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`);
+                });
+
+            } else {        
+                sql = `UPDATE userlevel SET xp = ${currentXp + addXp} WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`;
+                sql_ = `UPDATE userlevel SET level = ${currentLevel} WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`;
             }
         });
 
@@ -199,7 +217,6 @@ client.on("message", async message => {  // Client message event
                 connection.query(sql);
             }
         });
-
         
         if(sql) {
             connection.query(sql);
@@ -285,7 +302,7 @@ function log(embedObject, logType, guildId) {
 client.on("messageDelete", async message => {
     if(message.author.bot) return;
 
-    const messages = ["$me", "$do", "$try"];
+    const messages = ["$me", "$do", "$try", "$embed"];
 
     for(i = 0; i < messages.length; ++i) {
         if(message.content.startsWith(messages[i])) {
@@ -345,7 +362,6 @@ client.on("messageDelete", async message => {
     channel.send(embed);
     log(embed, "message", message.guild.id);
 });
-
 
 
 
@@ -410,7 +426,6 @@ client.on("messageUpdate", async (oldMessage, newMessage) => {
 
 
 
-
 client.on("roleDelete", async role => {
     const name = role.name;
 
@@ -466,6 +481,8 @@ client.on("guildMemberAdd", member => {
     member.guild.systemChannel.send(embed);
     log(embed, "user", member.guild.id);
 });
+
+
 
 client.on("guildMemberRemove", member => {
     const leaveReplies = ["Farewell!", "Bye...", "Goodbye.", "Sad moment..."];

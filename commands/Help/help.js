@@ -1,150 +1,187 @@
 const Discord = require("discord.js");
+const random = require("random");
 
 const config = require("../.././config.json");
 
 module.exports.run = async(client, message, args) => {
-    const modules = ["Administration", "Moderation", "Help", "Fun", "Informative", "Events", "Profile", "Levels", "Roleplay"];
-    const numberOfCommands = ["5", "7", "4", "5", "7", "10", "4", "2", "11"];
+    const modules_and_information = new Map(
+        [["Administration", "Module only administrators can use."],
+        ["Coins", "This module introduces coins system, you can buy items in admin-created shops, 2 commands, transfer coins to other people and more"],
+        ["Fun", "With this module you can have some fun and laugh."],
+        ["Help", "Thanks to this module you are currently reading this."],
+        ["Informative", "This module just gives information about stuff."],
+        ["Level", "With this module everyone can have their own level, you can see the leaderboard, each level you get coins."],
+        ["Moderation", "Only moderators can use this module."],
+        ["Profile", "Profile system module, everyone can have their own fully customizable profile, you can change everything."],
+        ["Roleplay", "Roleplay module, has all the commands you need for roleplaying with you friends."],
+        ["Events", "Events module. This is useful for administrators who want to see logs of the server."]]
+    );
 
+    const module_specific_commands = new Map(
+        [["Administration", ["addrole", "createrole", "deleterole", "evaluate", "removerole"]],
+        ["Coins", ["buyitem", "coins", "createitem", "createstore", "deleteitem", "deletestore", "getitemdescription", "inventory", "setitemdescription", "store", "transfercoins"]],
+        ["Fun", ["8ball", "embedmessage", "embedmessagecolor", "match", "percentage", "rand", "randitem"]],
+        ["Help", ["changelog", "documentation", "github", "help"]],
+        ["Informative", ["avatar", "botinfo", "guildinfo", "ping", "roblox", "uptime", "userinfo"]],
+        ["Level", ["leaderboard", "userlevel"]],
+        ["Moderation", ["ban", "kick", "mute", "purge", "report","unban", "warn"]],
+        ["Profile", ["changeprofile", "profile", "resetprofiledata", "transferprofile"]],
+        ["Roleplay", ["breakup", "do", "hug", "kill", "kiss", "me", "punch", "relationship", "relationshipinfo", "roleplayinfo", "try"]],
+        ["Events", ["Message delete", "Message bulk delete", "Message edit", "Emoji create", "Emoji delete", "Channel create", "Channel delete", "Member join", "Member leave", "Role create", "Role delete"]]]
+    );
 
-    const modulesInfo = ["```• $eval <js_code>\n• $addrole <guild_member> <role>\n• $removerole <guild_member> <role>\n• $createrole [role_color] <role_name>\n• $deleterole <role_name>```", 
-    "```• $ban <guild_member> [reason]\n• $kick <guild_member> [reason]\n• $purge <number_of_messages> [guild_member]\n• $warn <member> [reason]\n• $report <member> <reason>```", 
-    "```• $help [module_name/$command_name]\n• $changelog\n• $github\n• $documentation```", 
-    "```• $match <person_one> <person_two>\n• $8ball <message>\n• $percentage <message>\n• $randitem <items>\n• $rand <mim> <max>```",
-    "```• $avatar [guild_member]\n• $userinfo [guild_member]\n• $botinfo\n• $uptime\n• $ping\n• $guildinfo\n• $roblox```",
-    "```• Message Delete\n• Message Bulk Delete\n• Message Edit\n• Emoji Create\n• Emoji Delete\n• Channel Create\n• Channel Delete\n• Member join\n• Member leave\n• Role create\n• Role Delete```",
-    "```• $changeprofile <data> <new_value>\n• $profile [guild_member]\n• $resetprofiledata <data>\n• $transferprofile <data> <guild_name>```",
-    "```• $lvl [guild_member]\n• $levels```",
-    "```• $breakup\n• $do <message>\n• $hug <guild_member>\n• $kill <guild_member>\n• $kiss <guild_member>\n• $me <message>\n• $punch <guild_member>\n• $relationship <guild_member>\n• $relationshipinfo <guild_member>\n• $roleplayinfo <guild_member>\n• $try```"];
-    
+    // commandname: args: description
+    const commands_and_information = new Map( 
+        // Administration
+        [[["addrole", "ar"], ["<member> <role>", "Adds a role to the member."]],
+        [["createrole", "cr"], ["[#hex_color] <role_name>", "Creates a role with a name and an optional color."]],
+        [["deleterole", "dr"], ["<role>", "Deletes a role."]],
+        [["evaluate", "eval"], ["<js>", "Evaluates a javascript code."]],
+        [["removerole", "rr"], ["<member> <role>", "Removes a role from the member."]],
 
-    const modulesDescription = ["This is module for administration purposes. It has commands that only administrators can run.",
-"This is module for moderation purposes. Only moderators can use this.",
-"This is help module. Thanks to this module you can see this text.",
-"Want to have fun? This module has commands that can make you happy.",
-"This module gives information about everything.",
-"This module doesn't have any commands, but it has some events that might be useful for the staff team.",
-"Profile system module. Each user can have a unique profile which they can customize.",
-"Level system module. Each user has their experience and levels, you can see them either by typing a command or seeing it at their profile.",
-"Roleplay system module. With this module you can roleplay with friends, it allows you to have love or to have fun with friends using different commands."];
+        // Coins
+        [["buyitem", "itembuy"], ["<item_name>", "Buys an item in the store."]],
+        [["coins"], ["[member]", "Tells how many coins you or a specified member have."]],
+        [["createitem", "itemcreate"], ["<cost> <item_name>", "Creates an item in the store with cost."]],
+        [["createstore", "createshop", "createmarket"], ["<void>", "Creates a store in the guild if it does not exist yet."]],
+        [["deleteitem", "itemdelete"], ["<item_name>", "Deletes an item in the store."]],
+        [["deletestore"], ["<void>", "Deletes a store in the guild if it exists."]],
+        [["getitemdescription", "getiteminfo"], ["<void>", "Gets an item's description."]],
+        [["inventory"], ["<void>", "Tells every single item you have in your inventory."]],
+        [["setitemdescription", "setiteminfo"], ["<item_name> | <item_description>", "Sets item's description."]],
+        [["store", "shop", "market"], ["<void>", "Tells every single item your guild's store has."]],
+        [["transfercoins"], ["<amount> <user>", "Transfers coins to another user."]],
 
-    // ------------------------------------
+        // Fun
+        [["8ball"], ["<message>", "Gives a random answer on your message."]],
+        [["embedmessage", "embedmsg"], ["<message>", "Deletes your message and sends a new one in an embed.\n\nYou can get this command by buying it(1000)."]],
+        [["embedmessagecolor", "embedmsgclr"], ["<#hex_color> <message>", "Deletes your message and sends a new one in an embed with specified hexadecimal color.\n\nYou can get this command by buying $embedmessage(1000) and an upgrade to it(500)."]],
+        [["match"], ["<person_one> <person_two>", "Matches love chances of two people."]],
+        [["percentage", "%"], ["<message>", "Gives a percentage on the message."]],
+        [["random", "rand"], ["<min> <max>", "Gives a random number in between given range."]],
+        [["randomitem", "randitem"], ["<items>", "Gives a random item out of your items."]],
 
-    const commands = ["$eval", "$ban", "$kick", "$help", "$match", "$avatar", "$addrole", "$removerole", "$createrole", "$deleterole", "$purge", "$userinfo", "$botinfo", "$uptime", "$ping"
-,"$warn", "$8ball", "$guildinfo", "$percentage", "$roblox", "$report", "$changeprofile", "$profile", "$resetprofiledata", "$transferprofile", "$lvl",
-"$breakup", "$do", "$hug", "$kill", "$kiss", "$me", "$punch", "$relationship", "$relationshipinfo", "$roleplayinfo", "$try", "$levels",
-"$rand", "$randitem", "$github", "$documentation", "$changelog"];
+        // Help
+        [["changelog"], ["<void>", ""]],
+        [["documentation"], ["<void>", ""]],
+        [["github"], ["<void>", ""]],
+        [["help"], ["[module_name]/[$command_name]", "Gives a help about module/command name."]],
 
+        // Informative
+        [["avatar", "av"], ["[member]", "Gives avatar of the member."]],
+        [["botinfo", "bi"], ["<void>", "Tells information about this bot."]],
+        [["guildinfo", "gi"], ["<void>", "Tells information about current guild."]],
+        [["ping"], ["<void>", "Gives bot's ping."]],
+        [["roblox", "rbx"], ["[member]", "Gives roblox user of the member."]],
+        [["uptime"], ["<void>", "Gives bot's uptime."]],
+        [["userinfo", "ui"], ["[member]", "Gives information about member."]],
 
+        // Level
+        [["leaderboard", "levels", "lvls", "top"], ["<void>", "Shows the top 5 levels of the current guild."]],
+        [["lvl", "userlevel"], ["[member]", "Tells the level and some more cool stuff about level of the member."]],
+        
+        // Moderation
+        [["ban"], ["<member> [reason]", "Bans a member with an optional reason."]],
+        [["kick"], ["<member> [reason]", "Kicks a member with an optional reason."]],
+        [["mute"], ["<member> <time<s/m/h/d>> [reason]", "Not implemented yet."]],
+        [["purge", "prune"], ["<amount>", "Purges amount of messages."]],
+        [["report"], ["<member> <report_message>", "Reports a member with specified message. All messages go to #reports channel."]],
+        [["unban"], ["<member>", "Unbans a member."]],
+        [["warn"], ["<member> [reason]", "Warns a member with an optional reason."]],
 
-    const commandsInfo = [`\`\`\`$eval <js_code> - Evaluates and runs javascript code, will return error description if the code isn't correct.\`\`\``,
-`\`\`\`$ban <guild_member> [reason] - Bans guild member with optional reason.\`\`\``,
-`\`\`\`$kick <guild_member> [reason] - Kicks guild member with optional reason.\`\`\``,
-`\`\`\`$help {$h} [module_name/$command_name] - Gives information about module or command.\`\`\``,
-`\`\`\`$match <person_one> <person_two> - Tells whether person_one is a great soulmate to person_two. \`\`\``,
-`\`\`\`$avatar {$av} [optional_user] - Gives you optional_user's avatar picture, or yours if you didn't mention anybody.\`\`\``,
-`\`\`\`$addrole {$ar} <guild_member> <role> - Adds a role to the guild member.\`\`\``,
-`\`\`\`$removerole {$rr} <guild_member> <role> - Removes a role from guild member.\`\`\``,
-`\`\`\`$createrole {$cr} [#role_color] <role_name> - Creates a role with a name with an optional color.\`\`\``,
-`\`\`\`$deleterole {$dr} <role_name> - Deletes a role with a name.\`\`\``,
-`\`\`\`$purge <number_of_messages> [guild_member] - Deletes amount of messages, deletes number_of_messages only by guild_member if guild_member is included.\`\`\``,
-`\`\`\`$userinfo {$ui} [guild_member] - Gives information about guild member.\`\`\``,
-`\`\`\`$botinfo {$bi} - Gives information about the bot.\`\`\``,
-`\`\`\`$uptime - Gives how many time has elapsed since the start of the bot.\`\`\``,
-`\`\`\`$ping - Gives bot's and API latency.\`\`\``,
-`\`\`\`$warn <user> [reason] - Warns a user with an optional reason.\`\`\``,
-`\`\`\`$8ball <message> - Replies randomly to a message.\`\`\``,
-`\`\`\`$guildinfo {$gi} - Gives information about current guild.\`\`\``,
-`\`\`\`$percentage {$%} <message> - Gives percentages between 1 and 100 on the specified message.\`\`\``,
-`\`\`\`$roblox {$rbx} [user] - Gives information about roblox user of the discord user.\`\`\``,
-`\`\`\`$report <member> <reason> - Reports a member with a specified reason. \`\`\``,
-`\`\`\`$changeprofile <data> <value> - Sets profile data with a new value. \n\n Available data: 'name', 'age', 'status', 'mood', 'love', 'color', 'avatar', 'birthday'. \`\`\``,
-`\`\`\`$profile [member] - Shows you the profile of yourself or the member you mentioned. \`\`\``,
-`\`\`\`$resetprofiledata <data> - Resets specific data in your profile. Set data to 'ALL' to reset everything.  \n\n Available data: 'name', 'age', 'status', 'mood', 'love', 'color', 'avatar', 'birthday'.  \`\`\``,
-`\`\`\`$transferprofile <data> <guild_name> - Transfers specific data in your profile to specific guild. Set data to 'ALL' to transfer everything to that guild. \n\n Available data: 'name', 'age', 'status', 'mood', 'love', 'color', 'avatar', 'birthday'.  \`\`\``,
-`\`\`\`$lvl [member] - Gives information about yours or user's level and experience. \`\`\``,
-`\`\`\`$breakup - Break-ups with your current love, if you have one.- \`\`\``,
-`\`\`\`$do <movement> - Does movement from third person.  \`\`\``,
-`\`\`\`$hug <user> - Hugs user.  \`\`\``,
-`\`\`\`$kill <user> - Kills user.  \`\`\``,
-`\`\`\`$kiss <user> - Kisses user.  \`\`\``,
-`\`\`\`$me <movement> - Does movement from your person.  \`\`\``,
-`\`\`\`$punch <user> - Punches user.  \`\`\``,
-`\`\`\`$relationship {rs} <user> - Proposes a relationship to user, if you and user don't have any love.  \`\`\``,
-`\`\`\`$relationshipinfo {rsi} - Gives information about relationship, if you have one.  \`\`\``,
-`\`\`\`$roleplayinfo {rpi} - Gives information about all your roleplay actions. (hug, kiss, etc.)  \`\`\``,
-`\`\`\`$try <movement> - Tries a movement from your person.\`\`\``,
-`\`\`\`$levels {leaderboard} - Gives leaderboard of all levels in current guild. \`\`\``,
-`\`\`\`$random <min> <max> {rand} - Gives random in range. \`\`\``,
-`\`\`\`$randitem <items> - Gives random item in your message. \`\`\``,
-`\`\`\`$github - Gives a link to bot's github page.\`\`\``,
-`\`\`\`$documentation - Gives a link to bot's documentation github page. \`\`\``,
-`\`\`\`$changelog - Gives a link to bot's changelog github page. \`\`\``];
+        // Profile
+        [["changeprofile", "profilechange"], ["<data> <new_value>", "Changes your profile's data to new value. Check documentation for all available datas."]],
+        [["profile"], ["[member]", "Gives the profile of the member."]],
+        [["resetprofiledata"], ["<data>", "Resets your prfile's data. Check documentation for all available datas."]],
+        [["transferprofile"], ["<data> <guild_name>", "Copies data from one guild to another. Check documentation for all available datas."]],
 
-    if (!args[0]) { // All module names
+        // Roleplay
+        [["breakup"], ["<void>", "Breaks up with your current love."]],
+        [["do"], ["<message>", "Does a message."]],
+        [["hug"], ["<member>", "Hugs a member."]],
+        [["kill"], ["<member>", "Kills a member."]],
+        [["kiss"], ["<member>", "Kisses a member."]],
+        [["me"], ["<message>", "Does a message from your perspective."]],
+        [["punch"], ["<member>", "Punches a member."]],
+        [["relationship", "rs"], ["<member>", "Proposes a relationship to another member. They can either accept or decline the proposal."]],
+        [["relationshipinfo", "rsi"], ["[void]", "Tells information about your relationship if you have one."]],
+        [["roleplayinfo", "rpi"], ["[member]", "Tells about members' roleplay information."]],
+        [["try"], ["<message>", "Tries a message."]]]
+    );
+
+    const helpObject = args[0];
+
+    if(!helpObject) { // General help
         const embed = new Discord.MessageEmbed();
 
         embed.setColor(config.defaultColor);
         embed.setAuthor(message.author.username + "#" + message.author.discriminator, message.author.displayAvatarURL());
         embed.setTimestamp();
-        embed.setFooter(`Type $help <module_name> to get information about specific module.`, client.user.displayAvatarURL());
-        embed.setTitle("Available modules (press for documentation)");
-        embed.setURL("https://github.com/AlienTheBetrayer/UnknownBotRewrite/blob/master/README.md");
-        
+        embed.setFooter(`${config.prefix}help | $h <module_name> to get information about module.`, client.user.displayAvatarURL());
 
-        embed.addField("**Help**", "```1 command ```", true);
-        embed.addField("**Fun**", "```3 commands```", true);
-        embed.addField("**Informative**", "```7 command```", true);
-        embed.addField("**Administration**", "```5 command```", true);
-        embed.addField("**Moderation**", "```5 commands```", true);
-        embed.addField("**Profile**", "```4 commands```", true);
-        embed.addField("**Events**", "```10 events```", true);
-        embed.addField("**Levels**", "```1 command```", true);
-        embed.addField("**Roleplay**", "```11 commands```", true);
-     
+        let commands = 0;
+
+        for(const [key, value] of module_specific_commands.entries()) {
+            commands += value.length;
+            embed.addField(key, `\`\`\`${value.length}\`\`\``, true);
+        }
+
+        embed.setTitle(`${commands} commands | All modules help(link for documentation)`);
+        embed.setURL("https://github.com/AlienTheBetrayer/UnknownBotRewrite/blob/master/README.md");
 
         message.channel.send(embed);
-    } else { // Module info
-        const prefixIndex = args[0].indexOf(config.prefix);
+    } else if(!helpObject.startsWith("$")) { // Module-specific help
+        for(const [key, value] of modules_and_information.entries()) {
+            if(key.toLowerCase().indexOf(helpObject.toLowerCase()) != -1) {
+                const embed = new Discord.MessageEmbed();
+    
+                embed.setColor(config.defaultColor);
+                embed.setAuthor(message.author.username + "#" + message.author.discriminator, message.author.displayAvatarURL());
+                embed.setTimestamp();
+                embed.setFooter(`${config.prefix}help | $h <$command_name> to get information about command. `, client.user.displayAvatarURL());
+                embed.setTitle(`${key} module help`);
 
-        if (prefixIndex == -1) {
-            for (i = 0; i < modules.length; ++i) {
-                if (modules[i].toLowerCase().includes(args[0].toLowerCase())) {
-                    const moduleName = modules[i];
+                let commands = "";
 
-                    const embed = new Discord.MessageEmbed();
-
-                    embed.setColor(config.defaultColor);
-                    embed.setAuthor(message.author.username + "#" + message.author.discriminator, message.author.displayAvatarURL());
-                    embed.setTimestamp();
-                    embed.setFooter(`Type ${config.prefix}help <${config.prefix}command_name> to get help about specific command.`, client.user.displayAvatarURL());
-                    embed.setTitle(moduleName + " module help")
-                    embed.setDescription(modulesDescription[i] + "\n\n" + modulesInfo[i]);
-
-                    message.channel.send(embed);
-
-                    break;
+                for(const [k, v] of module_specific_commands.get(key).entries()) {
+                    commands += ((key.toLowerCase() != "events") ? "$" : "") + `${v}\n`;
                 }
-            }
-        } else { // Command info
-            for (i = 0; i < commands.length; ++i) {
-                if(commands[i].toLowerCase().includes(args[0].toLowerCase())) {
-                    const commandName = commands[i];
+                
+                embed.setDescription(value + `\`\`\`\n${commands}\`\`\``);
+
+                message.channel.send(embed);
+
+                break;
+            }   
+        }
+    } else { // Command-specific help
+        for(const [key, value] of commands_and_information.entries()) {
+            let found = false;
+
+            for(let i = 0; i < key.length; ++i) {
+                if(`$${key[i]}`.toLowerCase().indexOf(helpObject.toLowerCase()) != -1 && key != "") {
+                    let msg;
+
+                    msg = `$${key[i]}` + " " + ((value[0] != "<void>") ? value[0] : "") + ((value[0] == "<void>") ? "- " : " - ") + `${value[1]}`;
 
                     const embed = new Discord.MessageEmbed();
-
+    
+                    embed.setColor(config.defaultColor);
                     embed.setAuthor(message.author.username + "#" + message.author.discriminator, message.author.displayAvatarURL());
                     embed.setTimestamp();
-                    embed.setTitle(commandName + " command help");
-                    embed.setColor(config.defaultColor);
-                    embed.setDescription(commandsInfo[i]);
                     embed.setFooter(`${config.prefix}help`, client.user.displayAvatarURL());
+                    embed.setTitle(`$${key[i]} command help`);
+                    embed.setDescription(`\`\`\`json\n${msg}\`\`\``);
 
                     message.channel.send(embed);
+                    found = true;
 
                     break;
                 }
             }
+
+            if(found)
+                break;
         }
     }
 }

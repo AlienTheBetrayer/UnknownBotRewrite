@@ -75,8 +75,13 @@ module.exports.run = async(client, message, args, connection) => {
         }
 
         for(i = 1; i <= len; ++i) {
-            const userName = message.guild.members.cache.find(gm => gm.user.id == sortedRows[i - 1].userId).displayName;
-            embed.addField(`**${i}**`, `\`\`\`glsl\n# ${userName}\nLevel ${sortedRows[i - 1].level} | ${sortedRows[i - 1].xp} xp.\`\`\``);
+            const found = message.guild.members.cache.get(sortedRows[i - 1].userId);
+
+            if(!found)
+                continue;
+
+            const name = found.displayName;    
+            embed.addField(`**${i}**`, `\`\`\`glsl\n# ${name}\nLevel ${sortedRows[i - 1].level} | ${sortedRows[i - 1].xp} xp.\`\`\``);
         }
 
         message.channel.send(embed);
