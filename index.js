@@ -181,7 +181,7 @@ client.on("message", async message => {  // Client message event
                 embed.setTimestamp();
                 embed.setFooter(`$lvl`, client.user.displayAvatarURL());
                 embed.setTitle("Level up!");
-                embed.setDescription("Congratulations on reaching new level!")
+                embed.setDescription(`Congratulations on reaching new level!\n You have obtained **${level * 14}** coins!`);
                 embed.addField("New level", "```" + level + "```");
 
                 let msg = message.channel.send(embed)
