@@ -181,7 +181,7 @@ client.on("message", async message => {  // Client message event
                 embed.setTimestamp();
                 embed.setFooter(`$lvl`, client.user.displayAvatarURL());
                 embed.setTitle("Level up!");
-                embed.setDescription(`Congratulations on reaching new level!\n You have obtained **${level * 14}** coins!`);
+                embed.setDescription(`Congratulations on reaching new level!\n You have obtained **${level * 16}** coins!`);
                 embed.addField("New level", "```" + level + "```");
 
                 let msg = message.channel.send(embed)
@@ -198,7 +198,7 @@ client.on("message", async message => {  // Client message event
                 .then(async rows_ => {
                     const currentCoins = rows_[0].amount;
 
-                    await sqlQuery(connection, `UPDATE coins SET amount = ${currentCoins + level * 14} WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`);
+                    await sqlQuery(connection, `UPDATE coins SET amount = ${currentCoins + level * 16} WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`);
                 });
 
             } else {        

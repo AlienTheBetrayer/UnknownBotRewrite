@@ -21,7 +21,7 @@ module.exports.run = async(client, message, args, connection) => {
     const itemCost = args[0];
     const itemName = args.slice(1).join(" ");
 
-    if(!itemName || !itemCost) {
+    if(!itemName || !itemCost || isNaN(args[0])) {
         message.react(config.wrongEmoji);
         return;
     }
