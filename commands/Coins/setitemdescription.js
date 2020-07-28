@@ -52,7 +52,7 @@ module.exports.run = async(client, message, args, connection) => {
 
         const storeItemName = storeItemRow.itemName;
 
-        await sqlQuery(connection, `SELECT * FROM itemdescriptions WHERE guildId = '${message.guild.id}' AND itemName = '${storeItemName}'`)
+        await sqlQuery(connection, `SELECT * FROM itemdescriptions WHERE guildId = '${message.guild.id}' AND itemName = ${connection.escape(storeItemName)}`)
         .then(descriptionRows => {
             let sql;
             if(descriptionRows.length < 1) { // insert

@@ -23,6 +23,7 @@ module.exports.run = async(client, message, args, connection) => {
     await sqlQuery(connection, `SELECT * FROM store WHERE guildId = '${message.guild.id}'`)
     .then(async storeRows => {
         if(storeRows.length < 1) { // Store does not exist.
+            console.log("not ffdsfdsfound");
             message.react(config.wrongEmoji);
             return;
         }
@@ -30,6 +31,7 @@ module.exports.run = async(client, message, args, connection) => {
         await sqlQuery(connection, `SELECT * FROM coins WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}'`)
         .then(async coinsRows => {
             if(coinsRows.length < 1) { // User coins do not exist.
+                console.log("not foufffaaand");
                 message.react(config.wrongEmoji);
                 return;
             }
@@ -46,10 +48,12 @@ module.exports.run = async(client, message, args, connection) => {
 
             if(!storeItemRow) { // Can't find the store item name by user input.
                 message.react(config.wrongEmoji);
+                console.log("not found");
                 return;
             }
            
-            await sqlQuery(connection, `SELECT * FROM inventory WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}' AND itemName = '${storeItemRow.itemName}'`)
+            console.log(storeItemRow.itemName);
+            await sqlQuery(connection, `SELECT * FROM inventory WHERE userId = '${message.author.id}' AND guildId = '${message.guild.id}' AND itemName = ${connection.escape(storeItemRow.itemName)}`)
             .then(async inventoryRows => {
                 if(inventoryRows.length > 0 || coinsRows[0].amount < storeItemRow.itemCost) { // Item does not exist in our inventory yet or we don't have enough coins to buy the item.
                     message.react(config.wrongEmoji);

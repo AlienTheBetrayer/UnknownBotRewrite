@@ -47,8 +47,8 @@ module.exports.run = async(client, message, args, connection) => {
             return;
         }
 
-        connection.query(`DELETE FROM store WHERE guildId = '${message.guild.id}' AND itemName = '${storeItemName}'`);
-        connection.query(`DELETE FROM itemdescriptions WHERE guildId = '${message.guild.id}' AND itemName = '${storeItemName}'`);
+        connection.query(`DELETE FROM store WHERE guildId = '${message.guild.id}' AND itemName = ${connection.escape(storeItemName)}`);
+        connection.query(`DELETE FROM itemdescriptions WHERE guildId = '${message.guild.id}' AND itemName = ${connection.escape(storeItemName)}`);
 
         message.react(config.correctEmoji);
     });

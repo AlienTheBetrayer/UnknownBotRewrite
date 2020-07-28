@@ -38,14 +38,14 @@ module.exports.run = async(client, message, args, connection) => {
             }
         }
 
-        if(!storeItemRow) { // Can't find the item name.
+        if(!storeItemRow) { // Can't find the item naconnection.escape(storeItemName)e.
             message.react(config.wrongEmoji);
             return;
         }
 
         const storeItemName = storeItemRow.itemName;
 
-        await sqlQuery(connection, `SELECT * FROM itemdescriptions WHERE guildId = '${message.guild.id}' AND itemName = '${storeItemName}'`)
+        await sqlQuery(connection, `SELECT * FROM itemdescriptions WHERE guildId = '${message.guild.id}' AND itemName = ${connection.escape(storeItemName)}`)
         .then(descriptionRows => {
             if(descriptionRows.length < 1) { // No description for specified item.
                 message.react(config.wrongEmoji);
