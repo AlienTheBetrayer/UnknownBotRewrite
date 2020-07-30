@@ -25,8 +25,8 @@ module.exports.run = async(client, message, args, connection) => {
             return;
         }
 
-        connection.query(`INSERT INTO store(guildId, itemName, itemCost) VALUES('${message.guild.id}', 'Embed messages', 1000)`);
-        connection.query(`INSERT INTO store(guildId, itemName, itemCost) VALUES('${message.guild.id}', 'Embed messages color upgrade', 500)`);
+        connection.query(`INSERT INTO store(guildId, itemName, itemCost) VALUES('${message.guild.id}', 'Embed messages', 750)`);
+        connection.query(`INSERT INTO store(guildId, itemName, itemCost) VALUES('${message.guild.id}', 'Embed messages color upgrade', 250)`);
         
         message.react(config.correctEmoji);
     });
