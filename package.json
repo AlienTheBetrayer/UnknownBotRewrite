@@ -13,7 +13,7 @@
     "express": "^4.17.1",
     "moment": "^2.25.3",
     "moment-duration-format": "^2.3.2",
-    "moment-timezone": "^0.5.28",
+    "moment-timezone": "^0.5.35",
     "mysql": "^2.18.1",
     "random": "^2.2.0",
     "sharp": "^0.25.2",
